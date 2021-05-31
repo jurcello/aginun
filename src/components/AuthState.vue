@@ -88,14 +88,23 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { PulseLoader } from "@saeris/vue-spinners";
 import { contactEmail } from "@/constants/contacts";
 
+const defaultUsername =
+  process.env.NODE_ENV === "development"
+    ? process.env.VUE_APP_EASY_USERNAME
+    : "";
+const defaultPassword =
+  process.env.NODE_ENV === "development"
+    ? process.env.VUE_APP_EASY_PASSWORD
+    : "";
+
 export default Vue.extend({
   name: "AuthState",
   data() {
     return {
       contactEmail,
       dialog: false,
-      username: "kaj-dev",
-      password: "test",
+      username: defaultUsername,
+      password: defaultPassword,
       serverError: "",
       serverLoading: false
     };
@@ -114,8 +123,8 @@ export default Vue.extend({
     ...mapActions("user", ["login", "logout"]),
     ...mapActions("alerts", ["displayError"]),
     resetForm() {
-      this.username = "kaj-dev";
-      this.password = "test";
+      this.username = defaultUsername;
+      this.password = defaultPassword;
       this.serverLoading = false;
       this.serverError = "";
       (this.$refs.login_form as InstanceType<
