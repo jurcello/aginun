@@ -35,10 +35,7 @@ If you wish edit the code of this application, we recommend using [this setup](h
 
 ## Run
 
-If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker:start`. 
-
-Don't forget to stop the local backend when you are finnished developing by running
-the command `npm run docker:stop`.
+If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker:run`. 
 
 Once you started the local hasura backend and have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
 
@@ -75,7 +72,7 @@ There is a docker-compose override file for production purposes. In order to use
 
 Edit the variables in the env file at will. To run the production version locally, run:
 
-    `docker compose --file docker/docker-compose.yml --file docker/docker-compose.prod-override.yml --env-file ./docker/.env.prod.local up --build`
+    `docker-compose --file docker/docker-compose.yml --file docker/docker-compose.prod-override.yml --env-file ./docker/.env.prod.local up --build`
 
 In order to test it, you need to add the hasura url as defined in the vue production env file (`.env.production.local`) 
 to your hosts file (`/etc/hosts`):
