@@ -18,9 +18,9 @@ services:
       - "graphql-engine"
       - "nginx-proxy"
     environment:
-      VIRTUAL_HOST: ${FRONTEND_VIRTUAL_HOST}
-      LETSENCRYPT_HOST: ${FRONTEND_LETSENCRYPT_HOST}
-      LETSENCRYPT_EMAIL: ${FRONTEND_LETSENCRYPT_EMAIL}
+      VIRTUAL_HOST: '${FRONTEND_VIRTUAL_HOST}'
+      LETSENCRYPT_HOST: '${FRONTEND_LETSENCRYPT_HOST}'
+      LETSENCRYPT_EMAIL: '${FRONTEND_LETSENCRYPT_EMAIL}'
   nginx-proxy:
     image: jwilder/nginx-proxy:latest
     restart: always
