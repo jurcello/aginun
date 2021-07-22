@@ -33,7 +33,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
@@ -108,7 +108,7 @@ CREATE FUNCTION public.has_translations(object jsonb) RETURNS boolean
 DECLARE
     required_languages text[] := ARRAY(SELECT "ISO_639_1" FROM public.language);
 BEGIN
-    RETURN jsonb_typeof(object) = 'object'::text 
+    RETURN jsonb_typeof(object) = 'object'::text
     AND object ?& required_languages;
 END;
 $$;
@@ -650,26 +650,6 @@ COPY public."localGroup" (id, title) FROM stdin;
 23	XR Zeeland
 24	XR Zwolle
 25	XR NL
-\.
-
-
---
--- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.role (id, "dueDate", "createdDate", "timeCommitmentMin", "timeCommitmentMax", "workingCircleId", "localGroupId", "filledDate", "creatorId", responsibilities, email, phone, "mattermostId", requirements, title, description, "timeCommitment") FROM stdin;
-138	\N	2021-03-03 06:56:21.514017+00	11	20	2	1	2021-03-28 19:16:11.186+00	\N	{"en": "talk english", "nl": ""}	en@xr.nl	+(31)625541088	@en	{"en": "English", "nl": ""}	{"en": "writer", "nl": ""}	{"en": "only english", "nl": ""}	{"max": 5, "min": 1}
-161	\N	2021-03-09 16:20:42.148072+00	6	10	4	1	\N	\N	{"en": "Some\\nResponsibilities", "nl": ""}	asd@asd.tw		@afasfa	{"en": "asfasfsfasfasfas", "nl": ""}	{"en": "Role", "nl": ""}	{"en": "", "nl": ""}	{"max": 5, "min": 1}
-173	2021-12-26 00:00:00+00	2021-04-26 10:25:11.574537+00	11	20	6	2	\N	\N	{"en": "Begroting", "nl": "Begroting"}	tom@ootes.io	2256245235235	@tomootes	{"en": "", "nl": ""}	{"en": "Financieel leider", "nl": "Financieel leider"}	{"en": "", "nl": ""}	\N
-163	\N	2021-03-28 12:05:18.951946+00	6	10	6	2	\N	\N	{"en": "", "nl": "Blabla"}	asd@asf.oit	\N	@asfa	{"en": "", "nl": ""}	{"en": "", "nl": "Dutch role"}	{"en": "", "nl": ""}	{"max": 5, "min": 1}
-162	\N	2021-03-09 16:56:15.172966+00	6	10	16	2	2021-05-17 19:23:25.843+00	\N	{"en": "Not\\nSo\\nMany", "nl": ""}	asd@ads.it		@asfa	{"en": "", "nl": ""}	{"en": "testing role", "nl": ""}	{"en": "", "nl": ""}	{"max": 5, "min": 1}
-177	\N	2021-05-17 19:24:12.774055+00	6	10	4	1	\N	\N	{"en": "code the volunteer platform", "nl": ""}	test@test.com	\N	@id	{"en": "python", "nl": ""}	{"en": "programmer", "nl": ""}	{"en": "works as part of the volunteer platform team", "nl": ""}	\N
-156	2021-03-07 00:00:00+00	2021-03-07 14:54:04.56112+00	6	10	4	1	\N	\N	{"en": "- make posters\\n- make designs\\n- make even more", "nl": ""}	art@xr.nl	\N	@xr	{"en": "", "nl": ""}	{"en": "Artist", "nl": ""}	{"en": "", "nl": ""}	{"max": 5, "min": 1}
-157	2021-03-07 00:00:00+00	2021-03-07 15:12:35.806697+00	21	30	16	2	\N	\N	{"en": "train rebels", "nl": ""}	test@enauk.com	\N	@xr	{"en": "", "nl": ""}	{"en": "Trainer", "nl": ""}	{"en": "", "nl": ""}	{"max": 5, "min": 1}
-174	2021-04-29 00:00:00+00	2021-04-26 10:52:33.877106+00	6	10	4	3	\N	\N	{"en": "Tech", "nl": "Tech"}	tom@ootes.io	0262346246246	@tomootes	{"en": "", "nl": ""}	{"en": "Rebel radio tech lead", "nl": "Rebel radio tech lead"}	{"en": "", "nl": "Geen vervuiling meer"}	\N
-137	\N	2021-03-03 06:32:44.469771+00	6	10	2	1	\N	\N	{"en": "- take pictures during actions", "nl": "- Foto's nemen tijdens acties\\n"}	photo@xr.nl	\N	@photo.xr	{"en": "Camera", "nl": "Camera, statief"}	{"en": "Photographer", "nl": "Fotograaf"}	{"en": "you will work together with other talented photographers", "nl": "je werkt samen met andere getalenteerde fotografen"}	{"max": 5, "min": 1}
-139	\N	2021-03-03 12:17:37.140102+00	11	20	1	1	2021-05-12 09:57:44.093+00	\N	{"en": "", "nl": "Speak dutch"}	test@email.com	\N	@test	{"en": "", "nl": "Dutch"}	{"en": "", "nl": "Media coordinator"}	{"en": "", "nl": "This role is for the dutch circle"}	{"max": 5, "min": 1}
-175	\N	2021-04-27 15:36:15.84671+00	11	20	1	3	\N	\N	{"en": "write newsletters\\nwrite social media posts", "nl": ""}	write@rebel.com	\N	@writers	{"en": "proficiency in english & dutch & writing", "nl": ""}	{"en": "writer", "nl": ""}	{"en": "Test role", "nl": ""}	\N
 \.
 
 
