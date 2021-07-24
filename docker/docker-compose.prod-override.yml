@@ -1,0 +1,56 @@
+version: '3.6'
+services:
+  postgres:
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./docker/postgres/Dockerfile
+  graphql-engine:
+    restart: always
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./docker/nginx/Dockerfile
+    restart: always
+    expose:
+      - 80
+    depends_on:
+      - "graphql-engine"
+      - "nginx-proxy"
+    environment:
+      VIRTUAL_HOST: '${FRONTEND_VIRTUAL_HOST}'
+      LETSENCRYPT_HOST: '${FRONTEND_LETSENCRYPT_HOST}'
+      LETSENCRYPT_EMAIL: '${FRONTEND_LETSENCRYPT_EMAIL}'
+  nginx-proxy:
+    image: jwilder/nginx-proxy:latest
+    restart: always
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhosts:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+  nginx-proxy-compagnion:
+    restart: always
+    image: jrcs/letsencrypt-nginx-proxy-companion:v1.13
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhosts:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  certs: {}
+  vhosts: {}
+  html: {}
+
+networks:
+  default:
+    name: nginx-proxy
