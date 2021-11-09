@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <v-icon small class="mr-2" color="primary">
-      {{ icon }}
-    </v-icon>
-    <span class="font-weight-bold">{{ label }} </span>
-    <a :href="href" target="_blank">{{ linkText }}</a>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <i class="bi" :class="`bi-${icon}`"></i>
+      {{ label }}
+    </div>
+    <div class="col-12 col-md-6">
+      <a :href="href" target="_blank"> {{ linkText }}</a>
+    </div>
   </div>
 </template>
 
 <script>
-import { hrefValidator, iconValidator } from "@/utils/validators";
+import { hrefValidator } from "@/utils/validators";
 
 export default {
   name: "IconLink",
@@ -19,6 +21,10 @@ export default {
       type: String,
       validator: hrefValidator
     },
+    icon: {
+      required: true,
+      type: String
+    },
     linkText: {
       required: true,
       type: String
@@ -27,11 +33,6 @@ export default {
       required: false,
       default: "",
       type: String
-    },
-    icon: {
-      required: true,
-      type: String,
-      validator: iconValidator
     }
   }
 };

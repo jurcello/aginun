@@ -1,7 +1,6 @@
 import {
   makeObjectValidator,
   isArrayValid,
-  iconValidator,
   hrefValidator
 } from "@/utils/validators";
 import { isFunction, isString } from "lodash";
@@ -39,15 +38,6 @@ describe("isArrayValid", () => {
     const array = [1, 2, 3];
     const result = isArrayValid(array, isString);
     expect(result).toBe(false);
-  });
-});
-
-describe("iconValidator", () => {
-  it("returns true when the string starts with 'mdi-'", () => {
-    expect(iconValidator("mdi-icon")).toBe(true);
-  });
-  it("returns false when the string doesn't start with 'mdi-'", () => {
-    expect(iconValidator("icon")).toBe(false);
   });
 });
 

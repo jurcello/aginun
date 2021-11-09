@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid class="pa-0">
-    <v-row align="center" class="bg-light-green ma-2 pa-4 pa-md-16">
-      <v-col class="col-12 col-md-8">
-        <h1 class="white--text text-md-large mb-4">
+  <div class="container-fluid px-0">
+    <div class="row justify-content-center bg-light-green m-2 p-2 p-md-5 mb-2">
+      <div class="col-12 col-md-8">
+        <h1 class="mb-4 text-white">
           {{ $t("The rebellion needs your help") }}
         </h1>
         <p>
@@ -19,7 +19,7 @@
             )
           }}
         </p>
-        <p class="mb-0 mt-10">
+        <p class="mb-0">
           {{
             $t(
               "If you want to help in XR, apply to one of the many available volunteer roles.  You can help out in a role even if you have a few hours available each week"
@@ -27,7 +27,7 @@
           }}
         </p>
         <router-link
-          class="v-btn rounded bg-black white--text my-4"
+          class="btn btn-dark btn-lg rounded text-white my-4"
           to="/roles"
           >{{ $t("Find role") }}</router-link
         >
@@ -39,29 +39,29 @@
           }}
         </p>
         <router-link
-          class="v-btn rounded bg-black white--text my-4"
+          class="btn btn-dark btn-lg rounded text-white my-4"
           to="/roles/new"
         >
           {{ $t("Publish role") }}
         </router-link>
-      </v-col>
-      <v-col
-        class="col-12 col-md-4 d-flex flex-column align-center order-md-last"
+      </div>
+      <div
+        class="col-9 col-sm-7 col-md-4 d-flex justify-content-center align-items-center"
       >
         <img
-          class="w-50"
           src="@/assets/images/xr-join-rebellion-stamp.svg"
+          class="img-fluid"
           :alt="$t('Join the rebellion')"
         />
-      </v-col>
-    </v-row>
-    <v-row align="center" class="bg-light-blue ma-2 pa-4 pa-md-16">
-      <v-col class="col-12">
-        <h1 class="white--text text-center text-md-start text-md-large">
+      </div>
+    </div>
+    <div class="row bg-light-blue m-2 p-2 p-md-5 mb-2">
+      <div class="col-12">
+        <h1 class="mb-4 text-white">
           {{ $t("Made by volunteers for volunteers") }}
         </h1>
-      </v-col>
-      <v-col class="col-12 col-md-8">
+      </div>
+      <div class="col-12 col-md-8">
         <p>
           {{
             $t(
@@ -83,28 +83,29 @@
             )
           }}
         </p>
-        <router-link
-          class="v-btn rounded bg-black white--text my-4"
-          to="/support"
-        >
+        <router-link class="btn btn-dark btn-lg rounded my-4" to="/support">
           {{ $t("Help improve the platform") }}
         </router-link>
-      </v-col>
-    </v-row>
-    <v-row align="center" class="bg-green ma-2 pa-4 pa-md-16">
-      <v-col class="col-12">
-        <h1 class="white--text text-center text-md-start text-md-large">
+      </div>
+    </div>
+    <div class="row bg-green m-2 p-2 p-md-5">
+      <div class="col-12">
+        <h1 class="mb-4 text-white">
           {{ $t("Want to learn more?") }}
         </h1>
-      </v-col>
-      <v-col class="col-12 col-md-8 white--text">
+      </div>
+      <div class="col-12 col-md-8 text-white">
         <ul>
           <i18n
             path="Do you want to learn more about what XR is and what it stands for? {link}"
             tag="li"
           >
             <template v-slot:link>
-              <a class="white--text" :href="URLabout" target="_blank">
+              <a
+                class="text-white"
+                :href="getHref(route.About)"
+                target="_blank"
+              >
                 {{ $t("Visit the XR NL website") }}
               </a>
             </template>
@@ -114,7 +115,11 @@
             tag="li"
           >
             <template v-slot:link>
-              <a class="white--text" :href="URLabout" target="_blank">
+              <a
+                class="text-white"
+                :href="getHref(route.Structure)"
+                target="_blank"
+              >
                 {{ $t("Visit the XR NL structure page") }}
               </a>
             </template>
@@ -124,54 +129,64 @@
             tag="li"
           >
             <template v-slot:link>
-              <a class="white--text" :href="URLjoin" target="_blank">
+              <a class="text-white" :href="getHref(route.Join)" target="_blank">
                 {{ $t("Visit the XR NL join page") }}
               </a>
             </template>
           </i18n>
         </ul>
-      </v-col>
-    </v-row>
-  </v-container>
+      </div>
+    </div>
+  </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+enum Route {
+  About = "about",
+  Structure = "structure",
+  Join = "join"
+}
+
+export default Vue.extend({
   name: "AboutPage",
   data() {
     return {
       websiteBaseURL: "https://extinctionrebellion.nl/",
-      websiteEndpoints: {
-        about: {
+      websiteRoutes: {
+        [Route.About]: {
           nl: "over-ons/",
           en: "en/about-us/"
         },
-        structure: {
+        [Route.Structure]: {
           nl: "structuur/",
           en: "en/structure/"
         },
-        join: {
+        [Route.Join]: {
           nl: "doe-mee/",
           en: "en/join/"
         }
-      }
+      },
+      route: Route
     };
   },
-  computed: {
-    URLabout: function() {
-      return (
-        this.websiteBaseURL + this.websiteEndpoints.about[this.$i18n.locale]
-      );
-    },
-    URLstructure: function() {
-      return (
-        this.websiteBaseURL + this.websiteEndpoints.structure[this.$i18n.locale]
-      );
-    },
-    URLjoin: function() {
-      return (
-        this.websiteBaseURL + this.websiteEndpoints.join[this.$i18n.locale]
-      );
+  methods: {
+    getHref(route: Route) {
+      return this.websiteBaseURL + this.websiteRoutes[route][this.$i18n.locale];
     }
   }
-};
+});
 </script>
+<style lang="scss" scoped>
+.bg-green {
+  background: $xr-green;
+}
+
+.bg-light-green {
+  background: $xr-light-green;
+}
+
+.bg-light-blue {
+  background: $xr-light-blue;
+}
+</style>

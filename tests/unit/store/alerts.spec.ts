@@ -1,4 +1,4 @@
-import alertsStore, { AlertsState } from "@/store/modules/alerts";
+import alertsStore, { AlertsState, AlertType } from "@/store/modules/alerts";
 
 describe("Alerts Store", () => {
   describe("mutations", () => {
@@ -10,8 +10,7 @@ describe("Alerts Store", () => {
         };
         const alert = {
           message: "You succeeded",
-          color: "success",
-          icon: "mdi-checkbox-marked-circle-outline"
+          type: AlertType.Success
         };
 
         alertsStore.mutations.setAlert(state, alert);
@@ -41,8 +40,7 @@ describe("Alerts Store", () => {
         alertsStore.actions.displaySuccess({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,
-          color: "success",
-          icon: "mdi-checkbox-marked-circle-outline"
+          type: AlertType.Success
         });
       });
     });
@@ -53,8 +51,7 @@ describe("Alerts Store", () => {
         alertsStore.actions.displayError({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,
-          color: "error",
-          icon: "mdi-alert"
+          type: AlertType.Error
         });
       });
     });

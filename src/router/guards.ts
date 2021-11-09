@@ -1,20 +1,24 @@
 import gql from "graphql-tag";
 import { apolloClient } from "@/plugins/vue-apollo";
-import store from "../store";
+import { store } from "../store";
 import { FILTERS_KEYS } from "@/store/modules/roles";
 
 async function healthCheck() {
-  const { errors } = await apolloClient.query({
-    query: gql`
-      query HealthCheckQuery {
-        config {
-          alive
+  // TODO: check why connection errors need a try/catch now.
+  try {
+    const { errors } = await apolloClient.query({
+      query: gql`
+        query HealthCheckQuery {
+          config {
+            alive
+          }
         }
-      }
-    `
-  });
-
-  store.dispatch("errors/serverError", !!errors);
+      `
+    });
+    store.dispatch("errors/serverError", !!errors);
+  } catch (error) {
+    store.dispatch("errors/serverError", !!error);
+  }
 }
 
 export async function rolesGuard(to, from, next) {

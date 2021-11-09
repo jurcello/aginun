@@ -1,0 +1,9 @@
+.navbar {
+  .nav-link {
+    font-family: $headings-font-family;
+  }
+
+  .login-button:hover {
+    color: $primary;
+  }
+}

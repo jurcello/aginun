@@ -6,7 +6,7 @@ import ErrorPage from "../views/ErrorPage.vue";
 import RolesOverview from "../views/RolesOverview.vue";
 import AboutPage from "../views/AboutPage.vue";
 import SupportPage from "../views/SupportPage.vue";
-import RoleViewDialog from "../components/roles/RoleViewDialog.vue";
+import RoleViewModal from "../components/roles/RoleViewModal.vue";
 
 Vue.use(VueRouter);
 
@@ -16,7 +16,7 @@ const routes = [
     name: "roles",
     beforeEnter: rolesGuard,
     component: RolesOverview,
-    children: [{ path: "view/:id", component: RoleViewDialog }]
+    children: [{ path: "view/:id", component: RoleViewModal }]
   },
   {
     path: "/error",

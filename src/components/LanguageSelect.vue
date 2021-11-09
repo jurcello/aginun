@@ -1,16 +1,13 @@
 <template>
-  <v-select
-    style="max-width: 130px;"
-    class="language-select"
-    hide-details
-    :value="$i18n.locale"
-    :items="locales"
-    @input="setSelected"
-    item-text="label"
-    item-value="code"
-    dense
-    solo
-  ></v-select>
+  <select
+    class="form-select language-select border-white"
+    :aria-label="$t('Language select')"
+    v-model="$i18n.locale"
+  >
+    <option v-for="locale in locales" :key="locale.code" :value="locale.code">
+      {{ locale.label }}
+    </option>
+  </select>
 </template>
 
 <script lang="ts">

@@ -46,7 +46,7 @@ export default {
             workingCircles(order_by: { title: asc }) {
               id
               title
-              colour
+              color
             }
             localGroups(order_by: { title: asc }) {
               id

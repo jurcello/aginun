@@ -21,10 +21,6 @@ export const isArrayValid = (
   return arrayToValidate.every((item) => isItemValid(item));
 };
 
-export const iconValidator = (iconName: string) => {
-  return iconName.startsWith("mdi-");
-};
-
 export const hrefValidator = (href: string) => {
   const validHrefPrefixes = ["http://", "https://", "mailto:", "tel:"];
   return validHrefPrefixes.some((hrefPrefix) => href.startsWith(hrefPrefix));

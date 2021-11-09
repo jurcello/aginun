@@ -35,7 +35,7 @@ If you wish edit the code of this application, we recommend using [this setup](h
 
 ## Run
 
-If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker:run`. 
+If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker`. 
 
 Once you started the local hasura backend and have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
 

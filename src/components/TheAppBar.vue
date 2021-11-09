@@ -1,102 +1,109 @@
 <template>
-  <div class="nav-bar">
-    <div class="nav-bar__left">
-      <router-link class="logo-link" to="/">
-        <img
-          src="@/assets/images/xr.svg"
-          class="logo-link__icon img-fluid"
-          :alt="$t('Logo')"
-        />
-        <h2>{{ $t("Vacancies") }}</h2>
+  <div>
+    <nav
+      class="navbar navbar-expand-md navbar-dark bg-primary ps-1 pe-3 position-fixed w-100 z-index-sticky"
+    >
+      <router-link class="nav-link navbar-brand" to="/">
+        <img width="45" src="@/assets/images/xr.svg" :alt="$t('Logo')" />
+        {{ $t("Vacancies") }}
       </router-link>
-    </div>
-
-    <div class="nav-bar__right">
-      <div class="nav-bar__hamburger" @click.stop="toggleNavigation">
-        <img
-          src="@/assets/images/hamburger.svg"
-          class="img-fluid"
-          :alt="$t('Logo')"
-        />
+      <button
+        class="navbar-toggler"
+        type="button"
+        aria-controls="navbar-collapse"
+        :aria-label="$t('Toggle navbar')"
+        @click="navbar.toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" ref="navbar">
+        <ul class="navbar-nav align-items-center">
+          <li
+            v-for="navItem in navItems"
+            :key="navItem.path"
+            class="nav-item mx-1 my-2"
+          >
+            <router-link
+              class="nav-link px-2"
+              active-class="active"
+              :to="navItem.path"
+              @click.native="navbar.hide()"
+              >{{ navItem.label }}</router-link
+            >
+          </li>
+          <li class="nav-item my-2 mx-md-3">
+            <button
+              v-if="!loggedIn"
+              type="button"
+              class="btn btn-outline-light login-button px-3"
+              @click="loginModalOpen = true"
+            >
+              {{ $t("Login") }}
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn-outline-light login-button px-3"
+              @click="logout"
+            >
+              {{ $t("Logout") }}
+            </button>
+          </li>
+          <li class="nav-item my-3 my-md-0">
+            <language-select />
+          </li>
+        </ul>
       </div>
-      <div class="nav-bar__content" :class="{ active: mobileMenuVisible }">
-        <div class="nav-bar__content__close" @click="closeNavigation">
-          <img
-            src="@/assets/images/close.svg"
-            :alt="$t('Logo')"
-            width="48"
-            height="48"
-          />
-        </div>
-        <v-spacer />
-        <router-link class="nav-link" to="/roles" :exact-path="true">{{
-          $t("Roles")
-        }}</router-link>
-        <router-link class="nav-link" to="/about">{{
-          $t("About")
-        }}</router-link>
-        <router-link class="nav-link" to="/support">{{
-          $t("Support")
-        }}</router-link>
-        <auth-state></auth-state>
-        <div>
-          <language-select />
-        </div>
-      </div>
-    </div>
+    </nav>
+    <login-modal v-if="loginModalOpen" @closed="loginModalOpen = false" />
   </div>
 </template>
 
 <script>
 import LanguageSelect from "@/components/LanguageSelect.vue";
-import AuthState from "@/components/AuthState.vue";
+import LoginModal from "@/components/LoginModal.vue";
+import { mapGetters } from "vuex";
+import { Collapse } from "bootstrap";
+import { mapActions } from "vuex";
 
 export default {
   name: "TheAppBar",
   components: {
     LanguageSelect,
-    AuthState
+    LoginModal
   },
-  data: () => ({
-    mobileMenuVisible: false
-  }),
-  watch: {
-    $route() {
-      this.mobileMenuVisible = false;
-    }
+  computed: {
+    ...mapGetters({
+      loggedIn: "user/loggedIn"
+    })
+  },
+  data() {
+    return {
+      navbar: null,
+      loginModalOpen: false,
+      navItems: [
+        {
+          path: "/roles",
+          label: this.$t("Roles")
+        },
+        {
+          path: "/about",
+          label: this.$t("About")
+        },
+        {
+          path: "/support",
+          label: this.$t("Support")
+        }
+      ]
+    };
   },
   methods: {
-    closeNavigation() {
-      this.mobileMenuVisible = false;
-    },
-    toggleNavigation() {
-      if (this.mobileMenuVisible) {
-        this.mobileMenuVisible = false;
-      } else {
-        this.mobileMenuVisible = true;
-      }
-    }
+    ...mapActions("user", ["logout"])
+  },
+  mounted() {
+    this.navbar = new Collapse(this.$refs.navbar, {
+      toggle: false
+    });
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.logo-link {
-  display: flex;
-  justify-self: center;
-  align-items: center;
-  &__icon {
-    margin-right: 1rem;
-  }
-}
-.bottom-border {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  &.theme--light {
-    border-color: rgba(0, 0, 0, 0.12);
-  }
-  &.theme--dark {
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-}
-</style>

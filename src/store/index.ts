@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import alerts from "./modules/alerts";
 import roles from "./modules/roles";
 import groups from "./modules/groups";
@@ -8,7 +8,7 @@ import user from "./modules/user";
 
 Vue.use(Vuex);
 
-interface RootState {
+export interface RootState extends Store<unknown> {
   groups: Record<string, unknown>;
   alerts: Record<string, unknown>;
   roles: Record<string, unknown>;
@@ -18,7 +18,7 @@ interface RootState {
   user: Record<string, unknown>;
 }
 
-const store = new Vuex.Store<RootState>({
+export const store = new Store<RootState>({
   modules: {
     groups,
     alerts,
@@ -31,5 +31,3 @@ const store = new Vuex.Store<RootState>({
   // https://vuex.vuejs.org/guide/strict.html
   strict: process.env.NODE_ENV !== "production"
 });
-
-export default store;

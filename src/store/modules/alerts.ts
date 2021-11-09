@@ -3,6 +3,11 @@ export interface AlertsState {
   alert: unknown;
 }
 
+export enum AlertType {
+  Success = "success",
+  Error = "error"
+}
+
 export default {
   namespaced: true,
   state: {
@@ -22,15 +27,13 @@ export default {
     displaySuccess({ commit }, message) {
       commit("setAlert", {
         message,
-        color: "success",
-        icon: "mdi-checkbox-marked-circle-outline"
+        type: AlertType.Success
       });
     },
     displayError({ commit }, message) {
       commit("setAlert", {
         message,
-        color: "error",
-        icon: "mdi-alert"
+        type: AlertType.Error
       });
     }
   }

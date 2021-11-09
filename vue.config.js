@@ -1,12 +1,12 @@
 const path = require("path");
 
 module.exports = {
-  transpileDependencies: ["vuetify"],
   lintOnSave: process.env.NODE_ENV !== "production",
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "scss",
-      patterns: [path.resolve(__dirname, "./src/styles/global.scss")]
+      // Make scss variables available to all components
+      patterns: [path.resolve(__dirname, "./src/styles/imports/variables.scss")]
     },
     i18n: {
       locale: "en",

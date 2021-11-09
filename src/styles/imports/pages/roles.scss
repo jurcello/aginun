@@ -1,0 +1,57 @@
+.roles-list {
+  background-image: url("~@/assets/images/tree.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0 $navbar-height;
+  background-size: contain;
+
+  @include media-breakpoint-up(md) {
+    background-position: $grid-gutter-width $navbar-height-md;
+    background-size:
+      calc(
+        100vw - #{$sidebar-width} - (#{$grid-gutter-width} * 3)
+      )
+      calc(100vh - #{$content-top} - (#{$grid-gutter-width} * 2));
+  }
+
+  .card {
+    transition: $transition-base;
+
+    &:hover {
+      box-shadow: 0 4px 28px 0 #dadada;
+      cursor: pointer;
+    }
+
+    .card-header {
+      border-bottom: 0;
+      margin: -1px;
+    }
+
+    @include media-breakpoint-only(xs) {
+      flex-direction: row;
+
+      .card-header {
+        padding: $card-cap-padding-y;
+        border-radius: $card-inner-border-radius 0 0 $card-inner-border-radius;
+      }
+    }
+
+    @include media-breakpoint-only(md) {
+      flex-direction: row;
+
+      .card-header {
+        padding: $card-cap-padding-y;
+        border-radius: $card-inner-border-radius 0 0 $card-inner-border-radius;
+      }
+    }
+  }
+}
+
+.filters-sidebar {
+  // We need this to stack the filters sidebar under the navbar.
+  top: $navbar-height-md;
+  padding-top: $grid-gutter-width;
+  height: calc(100vh - #{$navbar-height-md});
+  width: $sidebar-width;
+  overflow: auto;
+}

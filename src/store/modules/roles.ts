@@ -212,7 +212,6 @@ export default {
         return e;
       }
     },
-    // eslint-disable-next-line func-names
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState

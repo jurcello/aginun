@@ -460,7 +460,7 @@ ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 CREATE TABLE public."workingCircle" (
     id integer NOT NULL,
     title jsonb NOT NULL,
-    colour text DEFAULT 'khaki-light'::text,
+    color text DEFAULT '#DC4F00'::text,
     CONSTRAINT title_has_translations CHECK (public.has_translations(title))
 );
 
@@ -555,7 +555,7 @@ COPY hdb_catalog.hdb_cron_events (id, trigger_name, scheduled_time, additional_p
 --
 
 COPY hdb_catalog.hdb_metadata (id, metadata, resource_version) FROM stdin;
-1	{"sources":[{"kind":"postgres","name":"default","tables":[{"select_permissions":[{"role":"public","permission":{"columns":["alive"],"filter":{}}},{"role":"user","permission":{"columns":["alive"],"filter":{}}}],"table":{"schema":"public","name":"config"}},{"select_permissions":[{"role":"public","permission":{"columns":["ISO_639_1"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["ISO_639_1"],"filter":{}}}],"is_enum":true,"table":{"schema":"public","name":"language"}},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"localGroup_aggregate","select_by_pk":"localGroup","select":"localGroups"},"custom_column_names":{}},"table":{"schema":"public","name":"localGroup"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"localGroupId","table":{"schema":"public","name":"role"}}},"name":"roles"}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["createdDate","creatorId","description","dueDate","email","filledDate","id","localGroupId","mattermostId","phone","requirements","responsibilities","timeCommitment","timeCommitmentMax","timeCommitmentMin","title","workingCircleId"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"object_relationships":[{"using":{"foreign_key_constraint_on":"localGroupId"},"name":"localGroup"},{"using":{"foreign_key_constraint_on":"workingCircleId"},"name":"workingCircle"}],"insert_permissions":[{"role":"user","permission":{"backend_only":false,"check":{},"columns":["creatorId","id","localGroupId","timeCommitmentMax","timeCommitmentMin","workingCircleId","description","requirements","responsibilities","timeCommitment","title","email","mattermostId","phone","createdDate","dueDate","filledDate"]}}],"configuration":{"custom_root_fields":{"select_aggregate":"roles_aggregate","select_by_pk":"role","select":"roles"},"custom_column_names":{}},"table":{"schema":"public","name":"role"},"update_permissions":[{"role":"user","permission":{"check":{},"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"delete_permissions":[{"role":"user","permission":{"filter":{}}}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title","colour"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title","colour"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"workingCircles_aggregate","select_by_pk":"workingCircle","select":"workingCircles"},"custom_column_names":{}},"table":{"schema":"public","name":"workingCircle"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"workingCircleId","table":{"schema":"public","name":"role"}}},"name":"roles"}]}],"configuration":{"connection_info":{"database_url":{"from_env":"HASURA_GRAPHQL_DATABASE_URL"},"pool_settings":{"retries":1,"idle_timeout":180,"max_connections":50}}},"functions":[{"function":{"schema":"public","name":"rolesSearch"}}]}],"version":3}	548
+1	{"sources":[{"kind":"postgres","name":"default","tables":[{"select_permissions":[{"role":"public","permission":{"columns":["alive"],"filter":{}}},{"role":"user","permission":{"columns":["alive"],"filter":{}}}],"table":{"schema":"public","name":"config"}},{"select_permissions":[{"role":"public","permission":{"columns":["ISO_639_1"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["ISO_639_1"],"filter":{}}}],"is_enum":true,"table":{"schema":"public","name":"language"}},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"localGroup_aggregate","select_by_pk":"localGroup","select":"localGroups"},"custom_column_names":{}},"table":{"schema":"public","name":"localGroup"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"localGroupId","table":{"schema":"public","name":"role"}}},"name":"roles"}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["createdDate","creatorId","description","dueDate","email","filledDate","id","localGroupId","mattermostId","phone","requirements","responsibilities","timeCommitment","timeCommitmentMax","timeCommitmentMin","title","workingCircleId"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"object_relationships":[{"using":{"foreign_key_constraint_on":"localGroupId"},"name":"localGroup"},{"using":{"foreign_key_constraint_on":"workingCircleId"},"name":"workingCircle"}],"insert_permissions":[{"role":"user","permission":{"backend_only":false,"check":{},"columns":["creatorId","id","localGroupId","timeCommitmentMax","timeCommitmentMin","workingCircleId","description","requirements","responsibilities","timeCommitment","title","email","mattermostId","phone","createdDate","dueDate","filledDate"]}}],"configuration":{"custom_root_fields":{"select_aggregate":"roles_aggregate","select_by_pk":"role","select":"roles"},"custom_column_names":{}},"table":{"schema":"public","name":"role"},"update_permissions":[{"role":"user","permission":{"check":{},"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"delete_permissions":[{"role":"user","permission":{"filter":{}}}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"workingCircles_aggregate","select_by_pk":"workingCircle","select":"workingCircles"},"custom_column_names":{}},"table":{"schema":"public","name":"workingCircle"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"workingCircleId","table":{"schema":"public","name":"role"}}},"name":"roles"}]}],"configuration":{"connection_info":{"database_url":{"from_env":"HASURA_GRAPHQL_DATABASE_URL"},"pool_settings":{"retries":1,"idle_timeout":180,"max_connections":50}}},"functions":[{"function":{"schema":"public","name":"rolesSearch"}}]}],"version":3}	548
 \.
 
 
@@ -625,31 +625,31 @@ nl
 --
 
 COPY public."localGroup" (id, title) FROM stdin;
-1	XR Alkmaar
-2	XR Amersfoort
-3	XR Amstelveen
-4	XR Amsterdam
-5	XR Arnhem/Nijmegen
-6	XR Brabant
-7	XR Castricum
-8	XR Delft
-9	XR Den Haag
-10	XR Deventer
-11	XR Dordrecht
-12	XR Enschede
-13	XR Groningen
-14	XR Haarlem
-15	XR Leeuwarden/Fryslân
-16	XR Leiden
-17	XR Maastricht
-18	XR Roermond
-19	XR Rotterdam
-20	XR Utrecht
-21	XR Wageningen
-22	XR Zaandam
-23	XR Zeeland
-24	XR Zwolle
-25	XR NL
+1	Alkmaar
+2	Amersfoort
+3	Amstelveen
+4	Amsterdam
+5	Arnhem/Nijmegen
+6	Brabant
+7	Castricum
+8	Delft
+9	Den Haag
+10	Deventer
+11	Dordrecht
+12	Enschede
+13	Groningen
+14	Haarlem
+15	Leeuwarden/Fryslân
+16	Leiden
+17	Maastricht
+18	Roermond
+19	Rotterdam
+20	Utrecht
+21	Wageningen
+22	Zaandam
+23	Zeeland
+24	Zwolle
+25	NL
 \.
 
 
@@ -657,19 +657,19 @@ COPY public."localGroup" (id, title) FROM stdin;
 -- Data for Name: workingCircle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."workingCircle" (id, title, colour) FROM stdin;
-1	{"en": "Media & Communications", "nl": "Media & Communicatie"}	red-light
-2	{"en": "Outreach & Training", "nl": "Outreach & Training"}	purple-light
-3	{"en": "Regenerative Culture", "nl": "Regeneratieve Cultuur"}	orange-light
-4	{"en": "Action & Logistics", "nl": "Actie & Logistiek"}	khaki-light
-5	{"en": "Political Strategy & Change", "nl": "Politieke Strategie & Verandering"}	green-light
-6	{"en": "Arts in Action", "nl": "Kunst in actie"}	red-light
-7	{"en": "Tech", "nl": "Tech"}	blue-light
-8	{"en": "Integration", "nl": "Integratie"}	yellow-light
-9	{"en": "Inclusion & Power", "nl": "Inclusie & Machtsstucturen"}	yellow-light
-10	{"en": "Finance", "nl": "Financiën"}	navy-light
-15	{"en": "Future of Democracy", "nl": "Toekomstige Democratie"}	green-light
-16	{"en": "Coordination Circle", "nl": "Coördinatie Cirkel"}	green-light
+COPY public."workingCircle" (id, title, color) FROM stdin;
+1	{"en": "Media & Communications", "nl": "Media & Communicatie"}	#FFC11E
+2	{"en": "Outreach & Training", "nl": "Outreach & Training"}	#CF6297
+3	{"en": "Regenerative Culture", "nl": "Regeneratieve Cultuur"}	#14AA37
+4	{"en": "Action & Logistics", "nl": "Actie & Logistiek"}	#DC4F00
+5	{"en": "Political Strategy & Change", "nl": "Politieke Strategie & Verandering"}	#3860AA
+6	{"en": "Arts in Action", "nl": "Kunst in actie"}	#BED276
+7	{"en": "Tech", "nl": "Tech"}	#75D0F1
+8	{"en": "Integration", "nl": "Integratie"}	#ED9BC4
+9	{"en": "Inclusion & Power", "nl": "Inclusie & Machtsstucturen"}	#986297
+10	{"en": "Finance", "nl": "Financiën"}	#F7EE6A
+15	{"en": "Future of Democracy", "nl": "Toekomstige Democratie"}	#FF8039
+16	{"en": "Coordination Circle", "nl": "Coördinatie Cirkel"}	#C80082
 \.
 
 

@@ -1,21 +1,21 @@
 <template>
-  <div class="pa-6 text-center">
-    <h1 class="text-sm-large">
+  <div class="container mt-4 mt-md-5 mb-3 text-center">
+    <h1 class="mb-4">
       {{ $t("DON'T PANIC.") }}
     </h1>
-    <p v-if="!isDevMode">
-      {{ $t("Something went wrong") }} 😧
-      <br />
+    <p>
+      {{
+        isDevMode
+          ? $t("The application made a failed request to the server.")
+          : $t("Something went wrong")
+      }}
+      😧
     </p>
-    <i18n
-      v-else
-      path="The application made a failed request to the server."
-      tag="p"
-      class="mb-0"
-    />
-    <i18n path="Please email {contactEmail} for help.">
+    <i18n path="Please email {contactEmail} for help." tag="p">
       <template v-slot:contactEmail>
-        <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+        <a :href="`mailto:${contactEmail}`" class="text-decoration-underline">{{
+          contactEmail
+        }}</a>
       </template>
     </i18n>
   </div>
@@ -33,12 +33,3 @@ export default {
   })
 };
 </script>
-<style lang="scss">
-@import "~vuetify/src/styles/settings/_variables";
-
-.text-sm-large {
-  @media #{map-get($display-breakpoints, "sm-and-up")} {
-    font-size: 60px;
-  }
-}
-</style>

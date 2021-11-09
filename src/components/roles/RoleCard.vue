@@ -1,41 +1,36 @@
 <template>
-  <default-card
-    :to="`roles/view/${role.id}`"
-    :color="workingCirclesMap[role.workingCircleId].colour"
-    :title="role.title[$i18n.locale]"
-    :secondaryInfo="localGroupsMap[role.localGroupId].title"
-    :subtitle="`${role.timeCommitmentMin} - ${role.timeCommitmentMax}`"
-    :subtitleExtra="$t('hours / week')"
-  >
-    <template #title>
-      {{ role.title[$i18n.locale] }}
-    </template>
-    <!-- <template #subtitle>
-      {{ localGroupsMap[role.localGroupId].title }} <br />
-      {{ workingCirclesMap[srole.workingCircleId].title[$i18n.locale] }}
-    </template> -->
-    <template #secondary>
-      {{ workingCirclesMap[role.workingCircleId].title[$i18n.locale] }}
-    </template>
-    <template #meta>
-      <span class="xr-title d-flex flex-column justify-center">
-        <span class="flex-grow-0" style="line-height: 1rem">
-          :title="role.title[$i18n.locale]"
-        </span>
-        <span class="overline text-uppercase"></span>
-      </span>
-    </template>
-  </default-card>
+  <div class="card w-100">
+    <div
+      class="card-header"
+      :style="{
+        background: workingCirclesMap[role.workingCircleId].color
+      }"
+    ></div>
+    <div class="card-body">
+      <h4 :if="role.title[$i18n.locale]">
+        {{ role.title[$i18n.locale] }}
+      </h4>
+      <div class="row gx-1">
+        <div class="col-6">
+          <h5 class="mb-0">
+            {{ role.timeCommitmentMin }} - {{ role.timeCommitmentMax }}
+          </h5>
+          <h6 class="mb-0">
+            {{ $t("hours / week") }}
+          </h6>
+        </div>
+        <div class="col-6 d-flex justify-content-end align-items-end">
+          {{ localGroupsMap[role.localGroupId].title }}
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import DefaultCard from "@/components/layout/DefaultCard.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "RoleCard",
-  components: {
-    DefaultCard
-  },
   computed: {
     ...mapGetters({
       localGroupsMap: "groups/localGroupsMap",
@@ -50,9 +45,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.overline {
-  font-family: unset !important;
-}
-</style>

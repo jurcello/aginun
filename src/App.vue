@@ -1,11 +1,11 @@
 <template>
-  <v-app>
-    <feedback-alert />
+  <div>
     <the-app-bar />
-    <v-content>
+    <feedback-alert />
+    <main>
       <router-view />
-    </v-content>
-  </v-app>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -17,11 +17,15 @@ export default {
   components: {
     TheAppBar,
     FeedbackAlert
-  },
-  data: () => ({
-    drawer: null // vuetify determines initial state based on screen size
-  })
+  }
 };
 </script>
+<style lang="scss" scoped>
+main {
+  padding-top: $navbar-height;
 
-<style lang="scss" scoped></style>
+  @include media-breakpoint-up(md) {
+    padding-top: $navbar-height-md;
+  }
+}
+</style>
