@@ -1,16 +1,10 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
-import VueAxios from "vue-axios";
 import Spinner from "@/components/Spinner.vue";
 import FloatingTagsInput from "@/components/FloatingTagsInput.vue";
 import IconLink from "@/components/IconLink.vue";
-import DatePickerField from "@/components/roles/DatePickerField.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 import i18n from "@/i18n/i18n";
-
-Vue.use(VueAxios, axios);
 
 describe("Spinner", () => {
   const localVue = createLocalVue();
@@ -137,55 +131,6 @@ describe("IconLink", () => {
   it("prop icon is rendered", () => {
     const wrapper = mountFunction();
     expect(wrapper.find(`i.bi-${icon}`).exists()).toBeTruthy();
-  });
-});
-
-// TODO: fix the failing tests
-describe.skip("DatePickerField", () => {
-  const localVue = createLocalVue();
-  const label = "Application deadline";
-
-  const mountFunction = (date) =>
-    mount(DatePickerField, {
-      localVue,
-      propsData: {
-        label,
-        date
-      }
-    });
-
-  it("prop label is rendered", () => {
-    const wrapper = mountFunction();
-    expect(wrapper.get("label").text()).toBe(label);
-  });
-
-  it("prop date is shown in DD/MM/YYYY format in the input field when passed", () => {
-    const date = new Date().toISOString();
-    const wrapper = mountFunction(date);
-    const [year, month, day] = date.split("-");
-    const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;
-    expect(wrapper.get("#date-picker").element.value).toBe(formattedDate);
-  });
-
-  it("input field is empty when no date is passed as prop", () => {
-    const wrapper = mountFunction();
-    expect(wrapper.get("input").element.value).toBe("");
-  });
-
-  it("emits an update with the correct date", async () => {
-    const wrapper = mountFunction();
-    await wrapper.get("#date-picker").trigger("focus");
-    await wrapper
-      // the first date available is today
-      .get(".is-today")
-      .trigger("click");
-    const emitted = wrapper.emitted().update[0][0];
-
-    const expected = new Date();
-    // the date we receive will always be at midnight,
-    // so we need to set the expected date to match it
-    expected.setUTCHours(0, 0, 0, 0);
-    expect(emitted).toBe(expected.toISOString());
   });
 });
 
