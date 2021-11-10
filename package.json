@@ -21,7 +21,6 @@
     "docker": "docker-compose --file docker/docker-compose.yml --file docker/docker-compose.local-override.yml --env-file ./docker/.env.local up"
   },
   "dependencies": {
-    "@mdi/font": "^4.5.95",
     "@saeris/vue-spinners": "^1.0.8",
     "@voerro/vue-tagsinput": "^2.7.1",
     "@vueform/slider": "^2.0.5",

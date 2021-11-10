@@ -18,7 +18,14 @@ module.exports = {
         /^router-link(|-exact)-active$/,
         /data-v-.*/,
         /^tags-input/,
-        /^typeahead-dropdown/
+        /^typeahead-dropdown/,
+        /^bi-/,
+        /^fade/,
+        /^modal-/,
+        /^offcanvas-/,
+        /^show/,
+        /^collapsing/,
+        /^(bs-)?popover.*/
       ]
     })
   ]
