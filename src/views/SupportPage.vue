@@ -17,9 +17,9 @@
           >
             <template v-slot:mattermostContact>
               <a
-                href="https://organise.earth/xr-netherlands/messages/@vacancies_support_xrnl"
+                href="https://organise.earth/xr-netherlands/channels/volunteer-platform"
                 target="_blank"
-                >{{ mattermostId }}</a
+                >@vacancies_support_xrnl</a
               >
             </template>
           </i18n>
@@ -73,13 +73,12 @@
 </template>
 
 <script>
-import { contactEmail, mattermostId } from "@/constants/contacts";
+import { contactEmail } from "@/constants/contacts";
 
 export default {
   name: "SupportPage",
   data: () => ({
-    contactEmail,
-    mattermostId
+    contactEmail
   })
 };
 </script>

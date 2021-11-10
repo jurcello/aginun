@@ -101,7 +101,7 @@
       </div>
     </div>
     <div
-      class="offcanvas offcanvas-end"
+      class="offcanvas offcanvas-start"
       tabindex="-1"
       id="sidebar"
       aria-labelledby="sidebar"
