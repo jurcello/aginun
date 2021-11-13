@@ -37,3 +37,8 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" scoped>
+.language-select {
+  width: 110px;
+}
+</style>

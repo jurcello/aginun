@@ -1,6 +1,6 @@
 <template>
   <div>
-    <the-app-bar />
+    <app-bar />
     <feedback-alert />
     <main>
       <router-view />
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import TheAppBar from "@/components/TheAppBar.vue";
+import AppBar from "@/components/AppBar.vue";
 import FeedbackAlert from "@/components/FeedbackAlert.vue";
 
 export default {
   name: "App",
   components: {
-    TheAppBar,
+    AppBar,
     FeedbackAlert
   }
 };

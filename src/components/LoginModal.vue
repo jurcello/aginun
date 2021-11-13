@@ -71,7 +71,7 @@
                   class="btn btn-outline-secondary w-25"
                   type="button"
                   :disabled="serverLoading"
-                  @click="$emit('close')"
+                  @click="loginModal.toggle()"
                 >
                   {{ $t("Cancel") }}
                 </button>
