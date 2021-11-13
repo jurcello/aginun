@@ -30,7 +30,7 @@
         :value="value.nl"
         @input="updateValue('nl', $event.target.value)"
       ></textarea>
-      <label :for="`${inputId}-nl`">🇳🇱 {{ $t("Dutch") }}</label>
+      <label :for="`${inputId}-nl`">🇳🇱{{ $t("Dutch") }}</label>
       <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
         {{ errors[0] }}
       </div>
@@ -64,7 +64,7 @@
         :value="value.en"
         @input="updateValue('en', $event.target.value)"
       ></textarea>
-      <label :for="`${inputId}-en`">🇬🇧 {{ $t("English") }}</label>
+      <label :for="`${inputId}-en`">🇬🇧{{ $t("English") }}</label>
       <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
         {{ errors[0] }}
       </div>

@@ -3,16 +3,20 @@
     <p class="mb-2">
       {{ $t("Choose the languages for this role:") }}
     </p>
-    <div class="btn-group mb-4" role="group">
+    <div class="mb-4">
       <input
         v-model="requiredLanguages"
         type="checkbox"
         class="btn-check"
         id="nl-toggle"
         value="nl"
+        :disabled="!requiredLanguages[1] && requiredLanguages[0] === 'nl'"
       />
-      <label class="btn btn-outline-primary btn-sm" for="nl-toggle">
-        🇳🇱 {{ $t("Dutch") }}
+      <label
+        class="btn btn-outline-primary btn-sm rounded-pill"
+        for="nl-toggle"
+      >
+        🇳🇱{{ $t("Dutch") }}
       </label>
       <input
         v-model="requiredLanguages"
@@ -20,9 +24,13 @@
         class="btn-check"
         id="en-toggle"
         value="en"
+        :disabled="!requiredLanguages[1] && requiredLanguages[0] === 'en'"
       />
-      <label class="btn btn-outline-primary btn-sm" for="en-toggle">
-        🇬🇧 {{ $t("English") }}
+      <label
+        class="btn btn-outline-primary btn-sm rounded-pill ms-2"
+        for="en-toggle"
+      >
+        🇬🇧{{ $t("English") }}
       </label>
     </div>
     <form @submit.prevent="handleSubmit(onSubmit)" @keyup.enter.prevent>
@@ -268,7 +276,7 @@
           <button
             class="btn btn-secondary w-100"
             type="submit"
-            :disabled="getIsInvalid(invalid)"
+            :disabled="isFormInvalid(invalid)"
           >
             {{ $t("Submit") }}
           </button>
@@ -389,7 +397,7 @@ export default {
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
     // Workaround to listen to invalid changes in the form
-    getIsInvalid(invalid) {
+    isFormInvalid(invalid) {
       if (this.formInvalidTooltip) {
         const action = invalid ? "disable" : "disable";
         this.formInvalidTooltip[action]();
@@ -453,3 +461,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.btn-check:disabled + .btn {
+  opacity: 1;
+}
+</style>

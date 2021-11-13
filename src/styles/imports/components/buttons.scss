@@ -1,10 +1,20 @@
+.btn {
+  transition: $transition-base;
+}
+
 .btn-primary {
   color: $white !important;
 }
 
 .btn-outline-primary {
   &:hover,
-  &.active,
+  &:active {
+    background-color: transparent;
+    border-color: $primary;
+    color: $primary;
+    opacity: .8;
+  }
+
   .btn-check:checked + & {
     color: $white;
   }
