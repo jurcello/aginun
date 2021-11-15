@@ -1,14 +1,11 @@
-## What changes have been made? 
+## What changes did you make? 
 
 If you have changed the interface please include screenshots of before and after. 
 
-## Rationale for these changes
+## Why did you make these changes?
 
-### Issues resolved by these changes
-
-Resolves #... 
+Resolves # 
 
 ## Additional comments
 
-Please explain difficult parts of your code to make it easier to review your pull request.  
-
+Please explain difficult parts of your code to make it easier to review your pull request.

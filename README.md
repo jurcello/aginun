@@ -18,30 +18,29 @@ But we cannot do it alone. No matter who you are, what skills you have or how mu
 
 If you want to get in contact or learn more about the project, please read the [instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md). To learn more about Extinction Rebellion, visit [rebellion.global](https://rebellion.global).
 
+## Requirements
+
+- [Node.js](https://nodejs.org/en/download/) >= 14.0.0
+- [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
+
 ## Install
 
 You can install the application in your own computer by following these simple steps:
 
 1. Clone the repository by running `git clone https://github.com/xrnl/aginun.git` in your terminal.
 2. Navigate into the project directory (`cd aginun`) and install packages with the command `npm install`.
-3. Copy the `.env.example` file to `.env.local`, as follows: `cp .env.example .env.local`.
-4. [Request the necessary credentials/ keys.](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
-5. Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
-6. Copy the example docker env file in the docker folder to a local env file and edit at will:
-    `cp ./docker/.env.local.example ./docker/.env.local`   
-
+3. create files with local environment variables: `cp .env.example .env.local && cp ./docker/.env.local.example ./docker/.env.local`.
 
 If you wish edit the code of this application, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 
 ## Run
 
-If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker`. 
+1. Run the ([Hasura](https://hasura.io/)) backend with `npm run docker`. 
+2. Run the frontend (in development mode) with `npm start`. 
 
-Once you started the local hasura backend and have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
+You can access the frontend at [localhost:8080](http://localhost:8080).
 
-## Edit back end locally
-
-The back end of this application runs on [Hasura](https://hasura.io/). The database and GraphQL endpoints of the development back end can be edited using the [Hasura console](http://178.62.229.109/console). If you wish to access the Hasura console, you have to [request the password](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
+You can use the backend API at [localhost:8008](http://localhost:8008). The database and GraphQL endpoints of the backend can be edited using the Hasura console, accessible at [localhost:8008/console](http://localhost:8008/console), using the `HASURA_GRAPHQL_ADMIN_SECRET` key in `docker/.env.local`.
 
 ## Test
 
@@ -68,16 +67,21 @@ Compile and minify for production with `npm run build`
 
 There is a docker-compose override file for production purposes. In order to use it, first copy the example env for production:
 
-    `cp ./docker/.env.prod.example ./docker/.env.prod.local`
+```
+cp ./docker/.env.prod.example ./docker/.env.prod.local
+```
 
 Edit the variables in the env file at will. To run the production version locally, run:
 
-    `docker-compose --file docker/docker-compose.yml --file docker/docker-compose.prod-override.yml --env-file ./docker/.env.prod.local up --build`
+```
+docker-compose --file docker/docker-compose.yml --file docker/docker-compose.prod-override.yml --env-file ./docker/.env.prod.local up --build
+```
 
 In order to test it, you need to add the hasura url as defined in the vue production env file (`.env.production.local`) 
 to your hosts file (`/etc/hosts`):
 
-    127.0.0.1 api.volunteer.extinctionrebellion.local volunteer.extinctionrebellion.local
+```
+127.0.0.1 api.volunteer.extinctionrebellion.local volunteer.extinctionrebellion.local
+```
 
 You can access the hasura console at `http://api.volunteer.extinctionrebellion.local/` and the local site at `http://volunteer.extinctionrebellion.local/` 
-

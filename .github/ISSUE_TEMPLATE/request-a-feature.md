@@ -11,10 +11,4 @@ assignees: ''
 
 ## Feature description
 
-Describe a step-by-step use case of your feature. 
-
-1. 
-2. 
-3. 
-
 ## Additional comments
