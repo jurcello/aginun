@@ -16,7 +16,12 @@
                 "Log in to post new vacancies or edit existing ones. Don't have an account yet?"
               )
             }}
-            <a :href="`mailto:${contactEmail}`">{{ $t("Contact us") }}</a>
+            <a
+              :href="mattermostContact"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ $t("Contact us") }}</a
+            >
           </p>
           <validation-observer v-slot="{ invalid }" ref="login_form">
             <form @submit.prevent="handleSubmit">
@@ -102,7 +107,7 @@ import Vue from "vue";
 import { mapActions } from "vuex";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { PulseLoader } from "@saeris/vue-spinners";
-import { contactEmail } from "@/constants/contacts";
+import { mattermostContact } from "@/constants/contacts";
 import { isProduction } from "@/utils/isProduction";
 import { Modal } from "bootstrap";
 
@@ -111,7 +116,7 @@ export default Vue.extend({
   data() {
     return {
       loginModal: (null as unknown) as Modal,
-      contactEmail,
+      mattermostContact,
       username: !isProduction() ? "kaj-dev" : "",
       password: !isProduction() ? "test" : "",
       serverError: "",
