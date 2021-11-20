@@ -71,13 +71,13 @@
 </template>
 
 <script>
-import { contactEmail, volunteerPlatformChannel } from "@/constants/contacts";
+import { contactEmail, mattermostContact } from "@/constants/contacts";
 
 export default {
   name: "SupportPage",
   data: () => ({
     contactEmail,
-    volunteerPlatformChannel
+    mattermostContact
   })
 };
 </script>
