@@ -9,8 +9,8 @@ const translations = require("../messages/nl.json");
       translations,
       {
         headers: {
-          Authorization: `Loco ${process.env.LOCO_API_KEY}`
-        }
+          Authorization: `Loco ${process.env.LOCO_API_KEY}`,
+        },
       }
     );
 

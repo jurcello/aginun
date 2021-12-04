@@ -21,20 +21,20 @@ export default Vue.extend({
       locales: [
         {
           code: "en",
-          label: this.$t("English")
+          label: this.$t("English"),
         },
         {
           code: "nl",
-          label: this.$t("Dutch")
-        }
-      ]
+          label: this.$t("Dutch"),
+        },
+      ],
     };
   },
   methods: {
     async setSelected(lang) {
       await loadLanguageAsync(lang);
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>

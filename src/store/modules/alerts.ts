@@ -5,14 +5,14 @@ export interface AlertsState {
 
 export enum AlertType {
   Success = "success",
-  Error = "error"
+  Error = "error",
 }
 
 export default {
   namespaced: true,
   state: {
     alertOn: false,
-    alert: {}
+    alert: {},
   },
   mutations: {
     setAlert(state, alert) {
@@ -21,20 +21,20 @@ export default {
     },
     disableAlert(state) {
       state.alertOn = false;
-    }
+    },
   },
   actions: {
     displaySuccess({ commit }, message) {
       commit("setAlert", {
         message,
-        type: AlertType.Success
+        type: AlertType.Success,
       });
     },
     displayError({ commit }, message) {
       commit("setAlert", {
         message,
-        type: AlertType.Error
+        type: AlertType.Error,
       });
-    }
-  }
+    },
+  },
 };

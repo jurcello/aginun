@@ -61,13 +61,11 @@
                   <i class="bi bi-geo-alt-fill fs-5"></i>
                   {{
                     localGroupsMap[role.localGroupId] &&
-                      localGroupsMap[role.localGroupId].title
+                    localGroupsMap[role.localGroupId].title
                   }},
                   {{
                     workingCirclesMap[role.workingCircleId] &&
-                      workingCirclesMap[role.workingCircleId].title[
-                        $i18n.locale
-                      ]
+                    workingCirclesMap[role.workingCircleId].title[$i18n.locale]
                   }}
                 </p>
               </div>
@@ -142,11 +140,9 @@
               </div>
               <div class="mt-4">
                 <a
-                  :href="
-                    `mailto:${role.email}?subject=${$t('Role application')}: ${
-                      role.title[$i18n.locale]
-                    }`
-                  "
+                  :href="`mailto:${role.email}?subject=${$t(
+                    'Role application'
+                  )}: ${role.title[$i18n.locale]}`"
                   target="_blank"
                   class="btn btn-primary px-4"
                   >{{ $t("Apply") }}</a
@@ -196,12 +192,12 @@ export default {
     PulseLoader,
     ContactLinks,
     RoleForm,
-    DeleteRoleButton
+    DeleteRoleButton,
   },
   data() {
     return {
       roleViewModal: null,
-      showRoleForm: false
+      showRoleForm: false,
     };
   },
   apollo: {
@@ -209,22 +205,22 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: parseInt(this.$route.params.id, 10)
+          roleId: parseInt(this.$route.params.id, 10),
         };
-      }
-    }
+      },
+    },
   },
   computed: {
     ...mapGetters({
       loggedIn: "user/loggedIn",
       localGroupsMap: "groups/localGroupsMap",
-      workingCirclesMap: "groups/workingCirclesMap"
+      workingCirclesMap: "groups/workingCirclesMap",
     }),
     publishedOnText() {
       return this.$t("Published on {date}", {
-        date: this.formatDate(this.role.createdDate)
+        date: this.formatDate(this.role.createdDate),
       });
-    }
+    },
   },
   mounted() {
     this.roleViewModal = new Modal(this.$refs.roleViewModal);
@@ -256,11 +252,11 @@ export default {
       const options = {
         year: "numeric",
         month: "long",
-        day: "numeric"
+        day: "numeric",
       };
       return formattedDate.toLocaleDateString("en-GB", options);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

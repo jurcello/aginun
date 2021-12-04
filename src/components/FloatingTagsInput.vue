@@ -3,7 +3,7 @@
     class="form-floating floating-tags-input mb-3"
     :class="{
       'is-focused': isFocused,
-      'with-tags': selectedTags.length
+      'with-tags': selectedTags.length,
     }"
   >
     <v-tags-input
@@ -43,17 +43,17 @@ export default {
       isFocused: false,
       // The number of initial updates depends on the selected tags.
       // See onTagsUpdated below.
-      initialUpdates: selectedTags.length
+      initialUpdates: selectedTags.length,
     };
   },
   props: {
     inputId: {
       type: String,
-      required: true
+      required: true,
     },
     items: {
       type: Array,
-      required: true
+      required: true,
       // TODO: handle validation with typescript types
       // validator: (items) => {
       //  const objectValidator = makeObjectValidator({
@@ -66,16 +66,16 @@ export default {
     selectedItemsIds: {
       type: Array,
       required: true,
-      validator: (items) => isArrayValid(items, Number.isInteger)
+      validator: (items) => isArrayValid(items, Number.isInteger),
     },
     label: {
       type: String,
-      required: true
+      required: true,
     },
     itemText: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     onBlur() {
@@ -100,7 +100,7 @@ export default {
         this.selectedTags.map(({ id }) => id)
       );
       this.onBlur();
-    }
-  }
+    },
+  },
 };
 </script>

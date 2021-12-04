@@ -6,11 +6,11 @@ describe("Alerts Store", () => {
       it("updates the alertOn and alert state", () => {
         const state: AlertsState = {
           alertOn: false,
-          alert: {}
+          alert: {},
         };
         const alert = {
           message: "You succeeded",
-          type: AlertType.Success
+          type: AlertType.Success,
         };
 
         alertsStore.mutations.setAlert(state, alert);
@@ -22,7 +22,7 @@ describe("Alerts Store", () => {
     describe("disableAlert", () => {
       it("updates the alertOn state", () => {
         const state = {
-          alertOn: true
+          alertOn: true,
         };
 
         alertsStore.mutations.disableAlert(state);
@@ -40,7 +40,7 @@ describe("Alerts Store", () => {
         alertsStore.actions.displaySuccess({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,
-          type: AlertType.Success
+          type: AlertType.Success,
         });
       });
     });
@@ -51,7 +51,7 @@ describe("Alerts Store", () => {
         alertsStore.actions.displayError({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,
-          type: AlertType.Error
+          type: AlertType.Error,
         });
       });
     });

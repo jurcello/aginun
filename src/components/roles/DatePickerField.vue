@@ -33,17 +33,17 @@ import DatePicker from "v-calendar/lib/components/date-picker.umd";
 export default {
   name: "DatePickerField",
   components: {
-    DatePicker
+    DatePicker,
   },
   props: {
     date: {
       type: String,
-      default: null
+      default: null,
     },
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -51,14 +51,14 @@ export default {
       selectAttribute: {
         highlight: {
           style: {
-            background: "#14aa7d"
+            background: "#14aa7d",
           },
           contentStyle: {
-            color: "#fff"
-          }
-        }
-      }
+            color: "#fff",
+          },
+        },
+      },
     };
-  }
+  },
 };
 </script>

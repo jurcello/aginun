@@ -29,7 +29,7 @@ export default {
   name: "ErrorPage",
   data: () => ({
     contactEmail,
-    isDevMode: !isProduction()
-  })
+    isDevMode: !isProduction(),
+  }),
 };
 </script>

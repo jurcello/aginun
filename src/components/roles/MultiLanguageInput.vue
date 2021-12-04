@@ -18,7 +18,7 @@
         :class="{ 'is-invalid': errors.length }"
         :id="`${inputId}-nl`"
         :placeholder="$t('Dutch')"
-        :value="value.nl"
+        :value="localValue.nl"
         @input="updateValue('nl', $event.target.value)"
       />
       <textarea
@@ -27,7 +27,7 @@
         :class="{ 'is-invalid': errors.length }"
         :id="`${inputId}-nl`"
         :placeholder="$t('Dutch')"
-        :value="value.nl"
+        :value="localValue.nl"
         @input="updateValue('nl', $event.target.value)"
       ></textarea>
       <label :for="`${inputId}-nl`">🇳🇱{{ $t("Dutch") }}</label>
@@ -52,7 +52,7 @@
         :class="{ 'is-invalid': errors.length }"
         :id="`${inputId}-en`"
         :placeholder="$t('English')"
-        :value="value.en"
+        :value="localValue.en"
         @input="updateValue('en', $event.target.value)"
       />
       <textarea
@@ -61,7 +61,7 @@
         :class="{ 'is-invalid': errors.length }"
         :id="`${inputId}-en`"
         :placeholder="$t('English')"
-        :value="value.en"
+        :value="localValue.en"
         @input="updateValue('en', $event.target.value)"
       ></textarea>
       <label :for="`${inputId}-en`">🇬🇧{{ $t("English") }}</label>
@@ -80,51 +80,56 @@ import { createTranslation } from "@/i18n/utils/create-translation";
 export default Vue.extend({
   name: "MultiLanguageInput",
   components: {
-    ValidationProvider
+    ValidationProvider,
   },
   computed: {
     isTextField() {
       return this.type === "text-field";
-    }
+    },
+  },
+  data() {
+    return {
+      localValue: this.value,
+    };
   },
   props: {
     requiredLanguages: {
       type: Array,
-      required: true
+      required: true,
     },
     value: {
       type: Object as () => Translation,
-      default: createTranslation()
+      default: createTranslation(),
     },
     label: {
       type: String,
-      default: ""
+      default: "",
     },
     inputId: {
       type: String,
-      required: true
+      required: true,
     },
     rules: {
       type: [String, Object],
-      default: null
+      default: null,
     },
     type: {
       type: String,
-      default: "text-field"
-    }
+      default: "text-field",
+    },
   },
   methods: {
     updateValue(key: string, value: string) {
-      this.value[key] = value;
-      this.$emit("input", this.value);
-    }
+      this.localValue[key] = value;
+      this.$emit("input", this.localValue);
+    },
   },
   watch: {
     value() {
       (this.$refs.nlForm as InstanceType<typeof ValidationProvider>)?.reset();
       (this.$refs.enForm as InstanceType<typeof ValidationProvider>)?.reset();
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>

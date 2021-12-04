@@ -1,5 +1,5 @@
 import i18n from "@/i18n/i18n";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import qs from "qs";
 import Vue from "vue";
 
@@ -8,10 +8,10 @@ export const loginCookieKey = "loginToken";
 export default {
   namespaced: true,
   state: {
-    token: ""
+    token: "",
   },
   getters: {
-    loggedIn: (state) => !!state.token
+    loggedIn: (state) => !!state.token,
   },
   mutations: {
     setToken(state, token) {
@@ -23,7 +23,7 @@ export default {
     removeToken(state) {
       state.token = null;
       Vue.$cookies.remove(loginCookieKey);
-    }
+    },
   },
   actions: {
     initializeFromCookie({ commit }) {
@@ -32,16 +32,14 @@ export default {
     async login({ commit, dispatch }, { username, password }) {
       const config = {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       };
       const params = {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
-        // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
-        password
+        password,
       };
 
       try {
@@ -53,12 +51,12 @@ export default {
         commit("setToken", data.access_token);
         commit("setTokenCookie", {
           token: data.access_token,
-          lifetime: data.expires_in
+          lifetime: data.expires_in,
         });
         dispatch("alerts/displaySuccess", i18n.t("Logged in"), { root: true });
       } catch ({ response }) {
         return (
-          (response?.data?.error_description as string) ||
+          ((response as AxiosResponse)?.data?.error_description as string) ||
           i18n.t("Login server unavailable")
         );
       }
@@ -66,6 +64,6 @@ export default {
     logout({ commit, dispatch }) {
       commit("removeToken");
       dispatch("alerts/displaySuccess", i18n.t("Logged out"), { root: true });
-    }
-  }
+    },
+  },
 };

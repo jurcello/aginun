@@ -8,10 +8,7 @@
             class="btn btn-primary d-inline-flex align-items-center"
             @click="newRoleModal.show()"
           >
-            <i
-              class="bi bi-plus"
-              style="font-size: 1.7rem; line-height: 1;"
-            ></i>
+            <i class="bi bi-plus" style="font-size: 1.7rem; line-height: 1"></i>
             {{ $t("New Role") }}
           </button>
           <hr />
@@ -31,7 +28,7 @@
           </div>
         </div>
         <div v-if="!roles.length && isLoadingRoles" class="text-center mt-5">
-          <spinner :text="$t('Loading roles')" />
+          <spinner-loader :text="$t('Loading roles')" />
         </div>
         <div v-if="!roles.length && !isLoadingRoles" class="text-center">
           <div v-if="isUsingFilters">
@@ -46,7 +43,7 @@
           <template #spinner>
             <!-- show spinner without transition for loading additional roles -->
             <div v-if="!!roles.length" class="text-center mt-5">
-              <spinner :text="$t('Loading roles')" />
+              <spinner-loader :text="$t('Loading roles')" />
             </div>
             <span v-else />
           </template>
@@ -73,10 +70,7 @@
             class="btn btn-primary d-inline-flex align-items-center"
             @click="newRoleModal.show()"
           >
-            <i
-              class="bi bi-plus"
-              style="font-size: 1.7rem; line-height: 1;"
-            ></i>
+            <i class="bi bi-plus" style="font-size: 1.7rem; line-height: 1"></i>
             {{ $t("New Role") }}
           </button>
         </div>
@@ -144,7 +138,7 @@ import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import RoleForm from "@/components/roles/RoleForm.vue";
 import InfiniteLoading from "vue-infinite-loading";
-import Spinner from "@/components/Spinner.vue";
+import SpinnerLoader from "@/components/SpinnerLoader.vue";
 import { Modal } from "bootstrap";
 
 export default {
@@ -154,11 +148,11 @@ export default {
     RoleFilters,
     RoleForm,
     InfiniteLoading,
-    Spinner
+    SpinnerLoader,
   },
   data() {
     return {
-      newRoleModal: undefined
+      newRoleModal: undefined,
     };
   },
   computed: {
@@ -166,19 +160,19 @@ export default {
       "roles",
       "isLoadingRoles",
       "selectedFilters",
-      "infiniteScrollId"
+      "infiniteScrollId",
     ]),
     ...mapGetters({
       loggedIn: "user/loggedIn",
-      isUsingFilters: "roles/isUsingFilters"
+      isUsingFilters: "roles/isUsingFilters",
     }),
     rolesSelectedLanguage() {
       // roles that do have an empty string as title have not been filled in for that language.
       return this.roles.filter((role) => role.title[this.$i18n.locale]);
-    }
+    },
   },
   methods: {
-    ...mapActions("roles", ["loadRoles"])
+    ...mapActions("roles", ["loadRoles"]),
   },
   mounted() {
     this.newRoleModal = new Modal(this.$refs.newRoleModal);
@@ -189,6 +183,6 @@ export default {
   },
   beforeDestroy() {
     this.newRoleModal.dispose();
-  }
+  },
 };
 </script>

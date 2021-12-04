@@ -11,20 +11,20 @@
 import { ScaleLoader } from "@saeris/vue-spinners";
 
 export default {
-  name: "Spinner",
+  name: "SpinnerLoader",
   components: {
-    ScaleLoader
+    ScaleLoader,
   },
   props: {
     themeColor: {
       type: String,
-      default: "shade"
+      default: "shade",
     },
     text: {
       type: String,
       required: false,
-      default: undefined
-    }
-  }
+      default: undefined,
+    },
+  },
 };
 </script>

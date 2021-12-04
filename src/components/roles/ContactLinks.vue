@@ -1,18 +1,16 @@
 <template>
   <div>
     <icon-link
-      :href="
-        `mailto:${role.email}?subject=${$t('Role application')}: ${role.title}`
-      "
+      :href="`mailto:${role.email}?subject=${$t('Role application')}: ${
+        role.title
+      }`"
       :link-text="role.email"
       :label="$t('Email')"
       icon="envelope"
     />
     <icon-link
       class="mt-3 mt-md-2"
-      :href="
-        `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
-      "
+      :href="`https://organise.earth/xr-netherlands/messages/${role.mattermostId}`"
       :link-text="role.mattermostId"
       :label="$t('Mattermost')"
       icon="chat-left"
@@ -34,13 +32,13 @@ import IconLink from "@/components/IconLink";
 export default {
   name: "ContactLinks",
   components: {
-    IconLink
+    IconLink,
   },
   props: {
     role: {
       required: true,
-      type: Object
-    }
-  }
+      type: Object,
+    },
+  },
 };
 </script>

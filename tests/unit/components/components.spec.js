@@ -1,17 +1,18 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Spinner from "@/components/Spinner.vue";
+import SpinnerLoader from "@/components/SpinnerLoader.vue";
 import FloatingTagsInput from "@/components/FloatingTagsInput.vue";
 import IconLink from "@/components/IconLink.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 import i18n from "@/i18n/i18n";
 
-describe("Spinner", () => {
+describe("SpinnerLoader", () => {
   const localVue = createLocalVue();
 
   localVue.use(Vuex);
 
-  const mountFunction = (options) => mount(Spinner, { localVue, ...options });
+  const mountFunction = (options) =>
+    mount(SpinnerLoader, { localVue, ...options });
 
   const spinnerSelector = "div > div > div";
 
@@ -34,7 +35,7 @@ describe("AutocompleteCustom", () => {
 
   const items = [
     { id: 1, title: "Enschede" },
-    { id: 2, title: "Brabant" }
+    { id: 2, title: "Brabant" },
   ];
 
   const label = "Local group";
@@ -47,10 +48,10 @@ describe("AutocompleteCustom", () => {
         items,
         selectedItemsIds: [],
         itemText: "title",
-        inputId: "id"
+        inputId: "id",
       },
       stubs: ["v-tags-input"],
-      ...options
+      ...options,
     });
 
   it("prop label is rendered", () => {
@@ -74,8 +75,8 @@ describe("AutocompleteCustom", () => {
         items,
         selectedItemsIds,
         itemText: "title",
-        inputId: "id"
-      }
+        inputId: "id",
+      },
     });
     const renderedItems = wrapper.findAll("v-chip__content");
     for (let i = 0; i < renderedItems.length; i += 1) {
@@ -99,9 +100,9 @@ describe("IconLink", () => {
         href,
         linkText,
         label,
-        icon
+        icon,
       },
-      ...options
+      ...options,
     });
 
   it("prop href validation works", () => {
@@ -142,7 +143,7 @@ describe("LanguageSelect", () => {
     localVue = createLocalVue();
     localVue.use(i18n);
     wrapper = mount(LanguageSelect, {
-      i18n
+      i18n,
     });
   });
 

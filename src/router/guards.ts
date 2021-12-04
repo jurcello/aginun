@@ -13,7 +13,7 @@ async function healthCheck() {
             alive
           }
         }
-      `
+      `,
     });
     store.dispatch("errors/serverError", !!errors);
   } catch (error) {
@@ -47,7 +47,7 @@ export async function rolesGuard(to, from, next) {
           filterValue:
             filterType === "search"
               ? filterValue
-              : filterValue.split(",").map((el) => parseInt(el, 10))
+              : filterValue.split(",").map((el) => parseInt(el, 10)),
         });
       }
     });

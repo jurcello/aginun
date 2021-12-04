@@ -16,39 +16,39 @@ const routes = [
     name: "roles",
     beforeEnter: rolesGuard,
     component: RolesOverview,
-    children: [{ path: "view/:id", component: RoleViewModal }]
+    children: [{ path: "view/:id", component: RoleViewModal }],
   },
   {
     path: "/error",
     name: "error",
     beforeEnter: hasErrorsGuard,
-    component: ErrorPage
+    component: ErrorPage,
   },
   {
     path: "/about",
     name: "about",
-    component: AboutPage
+    component: AboutPage,
   },
   {
     path: "/support",
     name: "support",
-    component: SupportPage
+    component: SupportPage,
   },
   {
     path: "/",
-    redirect: "/roles"
+    redirect: "/roles",
   },
   {
     // non-existent pages redirect to the home page
     path: "*",
-    redirect: "/roles"
-  }
+    redirect: "/roles",
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

@@ -25,8 +25,8 @@ module.exports = {
         /^offcanvas-/,
         /^show/,
         /^collapsing/,
-        /^(bs-)?popover.*/
-      ]
-    })
-  ]
+        /^(bs-)?popover.*/,
+      ],
+    }),
+  ],
 };

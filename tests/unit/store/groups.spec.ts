@@ -6,26 +6,26 @@ describe("Groups Store", () => {
   const localGroups = [
     {
       id: 1,
-      title: "Group 1"
+      title: "Group 1",
     },
     {
       id: 2,
-      title: "Group 2"
-    }
+      title: "Group 2",
+    },
   ];
   const workingCircles = [
     {
       id: 3,
-      title: "Circle 1"
+      title: "Circle 1",
     },
     {
       id: 4,
-      title: "Circle 2"
-    }
+      title: "Circle 2",
+    },
   ];
   const mockState: GroupsState = {
     localGroups,
-    workingCircles
+    workingCircles,
   };
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
 

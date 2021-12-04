@@ -6,14 +6,16 @@ module.exports = {
     "style-resources-loader": {
       preProcessor: "scss",
       // Make scss variables available to all components
-      patterns: [path.resolve(__dirname, "./src/styles/imports/variables.scss")]
+      patterns: [
+        path.resolve(__dirname, "./src/styles/imports/variables.scss"),
+      ],
     },
     i18n: {
       locale: "en",
       fallbackLocale: "en",
       localeDir: path.resolve(__dirname, "./src/i18n/messages"),
-      enableInSFC: true
-    }
+      enableInSFC: true,
+    },
   },
   chainWebpack: (config) => {
     // GraphQL Loader
@@ -34,5 +36,5 @@ module.exports = {
 
       return options;
     });
-  }
+  },
 };

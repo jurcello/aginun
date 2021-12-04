@@ -89,9 +89,9 @@
               id="local-group-select"
               v-model="role.localGroupId"
             >
-              <option :value="undefined">{{
-                $t("Select a local group")
-              }}</option>
+              <option :value="undefined">
+                {{ $t("Select a local group") }}
+              </option>
               <option
                 v-for="localGroup in localGroups"
                 :key="localGroup.id"
@@ -120,9 +120,9 @@
               id="working-circle-select"
               v-model="role.workingCircleId"
             >
-              <option :value="undefined">{{
-                $t("Select a local group")
-              }}</option>
+              <option :value="undefined">
+                {{ $t("Select a local group") }}
+              </option>
               <option
                 v-for="workingCircle in workingCircles"
                 :key="workingCircle.id"
@@ -154,9 +154,9 @@
               :value="role.timeCommitmentMin"
               @change="onTimeCommitmentChange($event.target.value)"
             >
-              <option :value="undefined">{{
-                $t("Select a time commitment")
-              }}</option>
+              <option :value="undefined">
+                {{ $t("Select a time commitment") }}
+              </option>
               <option
                 v-for="timeCommitment in timeCommitments"
                 :key="timeCommitment.min"
@@ -293,7 +293,7 @@ import {
   required,
   alpha_spaces as alphaSpaces,
   max,
-  email
+  email,
 } from "vee-validate/dist/rules";
 import DatePickerField from "@/components/roles/DatePickerField.vue";
 import MultiLanguageInput from "@/components/roles/MultiLanguageInput.vue";
@@ -305,34 +305,34 @@ import { Tooltip } from "bootstrap";
 
 extend("required", {
   ...required,
-  message: i18n.t("This field is required.")
+  message: i18n.t("This field is required."),
 });
 extend("email", {
   ...email,
-  message: i18n.t("You must enter a valid email address.")
+  message: i18n.t("You must enter a valid email address."),
 });
 extend("alpha_spaces", {
   ...alphaSpaces,
-  message: i18n.t("This field can only contain letters and spaces.")
+  message: i18n.t("This field can only contain letters and spaces."),
 });
 extend("max", {
   ...max,
   message: (_, values) =>
-    i18n.t("This field must be under {length} characters.", values)
+    i18n.t("This field must be under {length} characters.", values),
 });
 extend("phone", {
   validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
     return phoneRegex.test(value);
   },
-  message: i18n.t("You must enter a valid phone number")
+  message: i18n.t("You must enter a valid phone number"),
 });
 extend("mattermost", {
   validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
     return mattermostRegex.test(value);
   },
-  message: i18n.t("You must enter a valid Mattermost Id.")
+  message: i18n.t("You must enter a valid Mattermost Id."),
 });
 
 const initialRoleState = () => ({
@@ -347,7 +347,7 @@ const initialRoleState = () => ({
   email: undefined,
   mattermostId: undefined,
   phone: undefined,
-  dueDate: undefined
+  dueDate: undefined,
 });
 const defaultLanguages = ["en", "nl"];
 
@@ -357,22 +357,22 @@ export default {
     ValidationProvider,
     ValidationObserver,
     DatePickerField,
-    MultiLanguageInput
+    MultiLanguageInput,
   },
   props: {
     editRole: {
       default: null,
-      type: Object
-    }
+      type: Object,
+    },
   },
   data: () => ({
     role: initialRoleState(),
     formInvalidTooltip: undefined,
     timeCommitments,
-    requiredLanguages: defaultLanguages
+    requiredLanguages: defaultLanguages,
   }),
   computed: {
-    ...mapState("groups", ["localGroups", "workingCircles"])
+    ...mapState("groups", ["localGroups", "workingCircles"]),
   },
   watch: {
     editRole: {
@@ -391,8 +391,8 @@ export default {
         this.role = role;
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
@@ -423,14 +423,14 @@ export default {
         title: this.parseTranslation(this.role.title),
         responsibilities: this.parseTranslation(this.role.responsibilities),
         description: this.parseTranslation(this.role.description),
-        requirements: this.parseTranslation(this.role.requirements)
+        requirements: this.parseTranslation(this.role.requirements),
       };
       let error;
 
       if (this.editRole) {
         error = await this.updateRole({
           id: this.editRole.id,
-          ...role
+          ...role,
         });
       } else {
         error = await this.createRole(role);
@@ -451,14 +451,14 @@ export default {
 
         return result;
       }, {});
-    }
+    },
   },
   mounted() {
     this.formInvalidTooltip = new Tooltip(this.$refs.formInvalidTooltip);
   },
   beforeDestroy() {
     this.formInvalidTooltip.dispose();
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

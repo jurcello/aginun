@@ -31,5 +31,5 @@ new Vue({
       store.dispatch("user/initializeFromCookie");
     }
     await loadLanguageAsync(navigator.language.split("-")[0]);
-  }
+  },
 }).$mount("#app");

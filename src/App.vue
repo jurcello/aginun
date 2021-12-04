@@ -16,8 +16,8 @@ export default {
   name: "App",
   components: {
     AppBar,
-    FeedbackAlert
-  }
+    FeedbackAlert,
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -65,12 +65,12 @@ export default {
   name: "AppBar",
   components: {
     LanguageSelect,
-    LoginModal
+    LoginModal,
   },
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn"
-    })
+      loggedIn: "user/loggedIn",
+    }),
   },
   data() {
     return {
@@ -79,26 +79,26 @@ export default {
       navItems: [
         {
           path: "/roles",
-          label: this.$t("Roles")
+          label: this.$t("Roles"),
         },
         {
           path: "/about",
-          label: this.$t("About")
+          label: this.$t("About"),
         },
         {
           path: "/support",
-          label: this.$t("Support")
-        }
-      ]
+          label: this.$t("Support"),
+        },
+      ],
     };
   },
   methods: {
-    ...mapActions("user", ["logout"])
+    ...mapActions("user", ["logout"]),
   },
   mounted() {
     this.navbar = new Collapse(this.$refs.navbar, {
-      toggle: false
+      toggle: false,
     });
-  }
+  },
 };
 </script>

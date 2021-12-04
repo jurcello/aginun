@@ -4,6 +4,6 @@ export function createTranslation(value: Partial<Translation> = {}) {
   return {
     en: "",
     nl: "",
-    ...value
+    ...value,
   };
 }

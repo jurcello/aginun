@@ -1,14 +1,14 @@
 import {
   makeObjectValidator,
   isArrayValid,
-  hrefValidator
+  hrefValidator,
 } from "@/utils/validators";
 import { isFunction, isString } from "lodash";
 
 describe("makeObjectValidator", () => {
   const validatorFn = makeObjectValidator({
     id: "number",
-    title: "string"
+    title: "string",
   });
   it("returns a validator function based on the object passed", () => {
     expect(isFunction(validatorFn)).toBe(true);
@@ -16,13 +16,13 @@ describe("makeObjectValidator", () => {
   it("returns true when the object matches the structure", () => {
     const objToValidate = {
       id: 3,
-      title: "title"
+      title: "title",
     };
     expect(validatorFn(objToValidate)).toBe(true);
   });
   it("returns false when the object doesn't match the structure", () => {
     const objToValidate = {
-      id: "id"
+      id: "id",
     };
     expect(validatorFn(objToValidate)).toBe(false);
   });

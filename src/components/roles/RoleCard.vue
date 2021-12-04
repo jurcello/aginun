@@ -3,7 +3,7 @@
     <div
       class="card-header"
       :style="{
-        background: workingCirclesMap[role.workingCircleId].color
+        background: workingCirclesMap[role.workingCircleId].color,
       }"
     ></div>
     <div class="card-body">
@@ -34,14 +34,14 @@ export default {
   computed: {
     ...mapGetters({
       localGroupsMap: "groups/localGroupsMap",
-      workingCirclesMap: "groups/workingCirclesMap"
-    })
+      workingCirclesMap: "groups/workingCirclesMap",
+    }),
   },
   props: {
     role: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>

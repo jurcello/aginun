@@ -78,29 +78,29 @@ export default {
   components: {
     FloatingTagsInput,
     Slider,
-    PulseLoader
+    PulseLoader,
   },
   data: () => ({
-    timeCommitmentRange
+    timeCommitmentRange,
   }),
   props: {
     inputPrefix: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
     ...mapState("roles", ["selectedFilters"]),
     ...mapGetters({
-      isUsingFilters: "roles/isUsingFilters"
+      isUsingFilters: "roles/isUsingFilters",
     }),
     workingCircleItems() {
       return this.workingCircles.map(({ id, title }) => ({
         id,
-        title: title[this.$i18n.locale]
+        title: title[this.$i18n.locale],
       }));
-    }
+    },
   },
   methods: {
     ...mapActions("roles", ["setFilter", "setDefaultFilters"]),
@@ -109,10 +109,10 @@ export default {
       this.$router.replace("/roles");
     },
     // We need to debounce to avoid updating too often (e.g. while typing the search)
-    updateFilter: debounce(function(filterType, filterValue) {
+    updateFilter: debounce(function (filterType, filterValue) {
       this.setFilter({ filterType, filterValue });
-    }, 500)
-  }
+    }, 500),
+  },
 };
 </script>
 <style src="@vueform/slider/themes/default.css"></style>

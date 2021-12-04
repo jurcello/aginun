@@ -13,7 +13,7 @@ Vue.use(VueApollo);
 const baseUrl = process.env.VUE_APP_HASURA_SERVER_URL;
 
 const httpLink = createHttpLink({
-  uri: `${baseUrl}/v1/graphql`
+  uri: `${baseUrl}/v1/graphql`,
 });
 
 // set request headers based on current application state
@@ -23,8 +23,8 @@ const dynamicLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       // If the loginToken exists, this property will be added
-      ...(loginToken && { authorization: `Bearer ${loginToken}` })
-    }
+      ...(loginToken && { authorization: `Bearer ${loginToken}` }),
+    },
   };
 });
 
@@ -36,13 +36,13 @@ const apolloClient = new ApolloClient({
   defaultOptions: {
     query: {
       errorPolicy: "all",
-      fetchPolicy: "no-cache"
-    }
-  }
+      fetchPolicy: "no-cache",
+    },
+  },
 });
 
 const apolloProvider = new VueApollo({
-  defaultClient: apolloClient
+  defaultClient: apolloClient,
 });
 
 export { apolloClient, apolloProvider };

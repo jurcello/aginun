@@ -7,5 +7,5 @@ export default new VueI18n({
   locale: "en",
   fallbackLocale: "en",
   formatFallbackMessages: true,
-  silentTranslationWarn: true
+  silentTranslationWarn: true,
 });

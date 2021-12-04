@@ -9,8 +9,8 @@ const path = require("path");
       "https://localise.biz/api/export/locale/nl.json?index=text",
       {
         headers: {
-          Authorization: `Loco ${process.env.LOCO_API_KEY}`
-        }
+          Authorization: `Loco ${process.env.LOCO_API_KEY}`,
+        },
       }
     );
 

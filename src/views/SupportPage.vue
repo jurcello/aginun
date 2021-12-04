@@ -77,8 +77,8 @@ export default {
   name: "SupportPage",
   data: () => ({
     contactEmail,
-    mattermostContact
-  })
+    mattermostContact,
+  }),
 };
 </script>
 <style lang="scss" scoped>

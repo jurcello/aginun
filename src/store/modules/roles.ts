@@ -7,7 +7,7 @@ import {
   RolesSearchQuery,
   UpdateRoleMutation,
   DeleteRoleMutation,
-  FillRoleMutation
+  FillRoleMutation,
 } from "@/GraphQL/roles";
 import router from "@/router";
 
@@ -31,7 +31,7 @@ export const defaultFilters = (): FiltersState => ({
   search: "",
   localGroups: [],
   workingCircles: [],
-  timeCommitment: [timeCommitmentRange.min, timeCommitmentRange.max]
+  timeCommitment: [timeCommitmentRange.min, timeCommitmentRange.max],
 });
 export const FILTERS_KEYS = Object.keys(defaultFilters());
 
@@ -43,7 +43,7 @@ export default {
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollId: true, // when this variable changes new roles are loaded
-    selectedFilters: defaultFilters()
+    selectedFilters: defaultFilters(),
   },
   getters: {
     getByID: (state) => (id) => state.roles.find((role) => role.id === id),
@@ -57,7 +57,7 @@ export default {
             timeCommitmentRange.min ||
           state.selectedFilters.timeCommitment?.[1] !== timeCommitmentRange.max
       );
-    }
+    },
   },
   mutations: {
     addRole(state, newRole) {
@@ -101,7 +101,7 @@ export default {
     },
     setFilter(state, { filterType, filterValue }) {
       state.selectedFilters[filterType] = filterValue;
-    }
+    },
   },
   actions: {
     async createRole({ commit, dispatch }, newRole) {
@@ -113,22 +113,22 @@ export default {
             store,
             {
               data: {
-                insert_role: { returning }
-              }
+                insert_role: { returning },
+              },
             }
           ) => {
             commit("addRole", returning[0]);
-          }
+          },
         });
         dispatch("alerts/displaySuccess", i18n.t("Role created"), {
-          root: true
+          root: true,
         });
       } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured creating this role"),
           {
-            root: true
+            root: true,
           }
         );
         return e;
@@ -143,23 +143,23 @@ export default {
             store,
             {
               data: {
-                update_role: { returning }
-              }
+                update_role: { returning },
+              },
             }
           ) => {
             commit("editRole", returning[0]);
             dispatch("loadRoles");
-          }
+          },
         });
         dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
-          root: true
+          root: true,
         });
       } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured updating this role"),
           {
-            root: true
+            root: true,
           }
         );
         return e;
@@ -173,17 +173,17 @@ export default {
           variables: { id: roleID, filledDate: now },
           update: () => {
             commit("deleteRole", roleID);
-          }
+          },
         });
         dispatch("alerts/displaySuccess", i18n.t("Role filled"), {
-          root: true
+          root: true,
         });
       } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured while updating this role"),
           {
-            root: true
+            root: true,
           }
         );
         return e;
@@ -196,23 +196,23 @@ export default {
           variables: { id: roleID },
           update: () => {
             commit("deleteRole", roleID);
-          }
+          },
         });
         dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
-          root: true
+          root: true,
         });
       } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured while deleting this role"),
           {
-            root: true
+            root: true,
           }
         );
         return e;
       }
     },
-    loadRoles: throttle(async function(
+    loadRoles: throttle(async function (
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
     ) {
@@ -247,8 +247,8 @@ export default {
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
           search: `%${state.selectedFilters.search}%`,
-          language: i18n.locale
-        }
+          language: i18n.locale,
+        },
       });
 
       const newRoles = data.rolesSearch;
@@ -306,6 +306,6 @@ export default {
       commit("setLoadingState", true);
       commit("setDefaultFilters");
       dispatch("reloadRoles");
-    }
-  }
+    },
+  },
 };

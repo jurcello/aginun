@@ -145,7 +145,7 @@ import Vue from "vue";
 enum Route {
   About = "about",
   Structure = "structure",
-  Join = "join"
+  Join = "join",
 }
 
 export default Vue.extend({
@@ -156,25 +156,25 @@ export default Vue.extend({
       websiteRoutes: {
         [Route.About]: {
           nl: "over-ons/",
-          en: "en/about-us/"
+          en: "en/about-us/",
         },
         [Route.Structure]: {
           nl: "structuur/",
-          en: "en/structure/"
+          en: "en/structure/",
         },
         [Route.Join]: {
           nl: "doe-mee/",
-          en: "en/join/"
-        }
+          en: "en/join/",
+        },
       },
-      route: Route
+      route: Route,
     };
   },
   methods: {
     getHref(route: Route) {
       return this.websiteBaseURL + this.websiteRoutes[route][this.$i18n.locale];
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>

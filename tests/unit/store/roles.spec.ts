@@ -1,7 +1,7 @@
 import rolesStore, {
   defaultFilters,
   FiltersState,
-  RolesState
+  RolesState,
 } from "@/store/modules/roles";
 import { apolloClient } from "@/plugins/vue-apollo";
 import { ApolloQueryResult } from "apollo-client";
@@ -12,8 +12,8 @@ jest.mock("lodash/throttle", () => jest.fn((fn) => fn));
 jest.mock("@/router", () => ({
   push: jest.fn(),
   currentRoute: {
-    path: "/"
-  }
+    path: "/",
+  },
 }));
 jest.useFakeTimers();
 
@@ -21,15 +21,15 @@ describe("Roles Store", () => {
   const roles = [
     {
       id: 1,
-      title: "Role 1"
+      title: "Role 1",
     },
     {
       id: 2,
-      title: "Role 2"
-    }
+      title: "Role 2",
+    },
   ];
   const mockState: Partial<RolesState> = {
-    roles
+    roles,
   };
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
   const apolloMutateSpy = jest.spyOn(apolloClient, "mutate");
@@ -39,7 +39,7 @@ describe("Roles Store", () => {
       it("returns true when paginationOffset is 0", () => {
         expect(
           rolesStore.getters.isNewQuery({
-            paginationOffset: 0
+            paginationOffset: 0,
           })
         ).toBe(true);
       });
@@ -47,7 +47,7 @@ describe("Roles Store", () => {
       it("returns false when paginationOffset is not 0", () => {
         expect(
           rolesStore.getters.isNewQuery({
-            paginationOffset: 10
+            paginationOffset: 10,
           })
         ).toBe(false);
       });
@@ -57,7 +57,7 @@ describe("Roles Store", () => {
       it("returns false when using the default filters", () => {
         expect(
           rolesStore.getters.isNewQuery({
-            selectedFilters: defaultFilters()
+            selectedFilters: defaultFilters(),
           })
         ).toBe(false);
       });
@@ -66,8 +66,8 @@ describe("Roles Store", () => {
         expect(
           rolesStore.getters.isUsingFilters({
             selectedFilters: {
-              workingCircles: ["something"]
-            }
+              workingCircles: ["something"],
+            },
           })
         ).toBe(true);
       });
@@ -76,8 +76,8 @@ describe("Roles Store", () => {
         expect(
           rolesStore.getters.isUsingFilters({
             selectedFilters: {
-              localGroups: ["something"]
-            }
+              localGroups: ["something"],
+            },
           })
         ).toBe(true);
       });
@@ -86,8 +86,8 @@ describe("Roles Store", () => {
         expect(
           rolesStore.getters.isUsingFilters({
             selectedFilters: {
-              timeCommitment: [2]
-            }
+              timeCommitment: [2],
+            },
           })
         ).toBe(true);
       });
@@ -96,8 +96,8 @@ describe("Roles Store", () => {
         expect(
           rolesStore.getters.isUsingFilters({
             selectedFilters: {
-              search: "something"
-            }
+              search: "something",
+            },
           })
         ).toBe(true);
       });
@@ -111,13 +111,13 @@ describe("Roles Store", () => {
           roles: [
             {
               id: 1,
-              title: "Role 1"
-            }
-          ]
+              title: "Role 1",
+            },
+          ],
         };
         const newRole = {
           id: 2,
-          title: "Role 2"
+          title: "Role 2",
         };
         rolesStore.mutations.addRole(state, newRole);
         expect(state.roles[0]).toBe(newRole);
@@ -127,12 +127,12 @@ describe("Roles Store", () => {
     describe("deleteRole", () => {
       it("deletes a role from the state", () => {
         const state = {
-          roles: [...roles]
+          roles: [...roles],
         };
         rolesStore.mutations.deleteRole(state, 1);
         expect(state.roles[0]).toEqual({
           id: 2,
-          title: "Role 2"
+          title: "Role 2",
         });
       });
     });
@@ -140,7 +140,7 @@ describe("Roles Store", () => {
     describe("addRoles", () => {
       it("adds roles to the state", () => {
         const state = {
-          roles: []
+          roles: [],
         };
         rolesStore.mutations.addRoles(state, roles);
         expect(state.roles[0]).toBe(roles[0]);
@@ -151,11 +151,11 @@ describe("Roles Store", () => {
     describe("editRole", () => {
       it("edits a role in the state", () => {
         const state = {
-          roles: [...roles]
+          roles: [...roles],
         };
         const editedRole = {
           id: 1,
-          title: "Role 1 edited"
+          title: "Role 1 edited",
         };
         rolesStore.mutations.editRole(state, editedRole);
         expect(state.roles[0]).toBe(editedRole);
@@ -182,7 +182,7 @@ describe("Roles Store", () => {
       it("clears roles and paginationOffset from the state", () => {
         const state = {
           roles,
-          paginationOffset: 10
+          paginationOffset: 10,
         };
         rolesStore.mutations.clearRoles(state);
         expect(state.roles).toEqual([]);
@@ -193,7 +193,7 @@ describe("Roles Store", () => {
     describe("triggerReload", () => {
       it("toggles infiniteScrollId in the state", () => {
         const state = {
-          infiniteScrollId: false
+          infiniteScrollId: false,
         };
         rolesStore.mutations.triggerReload(state);
         expect(state.infiniteScrollId).toBe(true);
@@ -204,7 +204,7 @@ describe("Roles Store", () => {
       it("increases paginationOffset in the state based on paginationLimit", () => {
         const state = {
           paginationOffset: 0,
-          paginationLimit: 20
+          paginationLimit: 20,
         };
         rolesStore.mutations.nextPagination(state);
         expect(state.paginationOffset).toBe(20);
@@ -214,7 +214,7 @@ describe("Roles Store", () => {
     describe("setDefaultFilters", () => {
       it("sets the default filters", () => {
         const state = {
-          selectedFilters: {}
+          selectedFilters: {},
         };
         rolesStore.mutations.setDefaultFilters(state);
         expect(state.selectedFilters).toEqual(defaultFilters());
@@ -224,11 +224,11 @@ describe("Roles Store", () => {
     describe("setFilter", () => {
       it("sets a filter in the state", () => {
         const state: Partial<RolesState> = {
-          selectedFilters: defaultFilters()
+          selectedFilters: defaultFilters(),
         };
         const newFilter = {
           filterType: "search",
-          filterValue: "newSearch"
+          filterValue: "newSearch",
         };
         rolesStore.mutations.setFilter(state, newFilter);
         expect(
@@ -247,7 +247,7 @@ describe("Roles Store", () => {
         const dispatch = jest.fn(() => Promise.resolve());
         const newRole = {
           id: 3,
-          title: "Role 3"
+          title: "Role 3",
         };
         await rolesStore.actions.createRole({ commit, dispatch }, newRole);
         expect(apolloMutateSpy).toBeCalled();
@@ -264,7 +264,7 @@ describe("Roles Store", () => {
         const dispatch = jest.fn(() => Promise.resolve());
         const updatedRole = {
           id: 3,
-          title: "Role 3"
+          title: "Role 3",
         };
         await rolesStore.actions.updateRole({ commit, dispatch }, updatedRole);
         expect(apolloMutateSpy).toBeCalled();
@@ -272,7 +272,7 @@ describe("Roles Store", () => {
           "alerts/displaySuccess",
           i18n.t("Role updated"),
           {
-            root: true
+            root: true,
           }
         );
       });
@@ -301,30 +301,30 @@ describe("Roles Store", () => {
           selectedFilters: {
             localGroups: [],
             workingCircles: [],
-            timeCommitment: [1, 30]
-          }
+            timeCommitment: [1, 30],
+          },
         },
         getters: {},
         commit,
         rootState: {
           groups: {
             localGroups: [],
-            workingCircles: []
-          }
+            workingCircles: [],
+          },
         },
         rootGetters: {
           "groups/localGroupIds": null,
-          "groups/workingCircleIds": null
+          "groups/workingCircleIds": null,
         },
-        dispatch
+        dispatch,
       };
       const defaultScrollState = {
         complete: jest.fn(),
-        loaded: jest.fn()
+        loaded: jest.fn(),
       };
       apolloQuerySpy.mockReturnValue(
         Promise.resolve({
-          data: { rolesSearch: mockState.roles }
+          data: { rolesSearch: mockState.roles },
         } as ApolloQueryResult<unknown>)
       );
 
@@ -353,8 +353,8 @@ describe("Roles Store", () => {
           {
             ...defaultPayload,
             getters: {
-              isNewQuery: true
-            }
+              isNewQuery: true,
+            },
           },
           defaultScrollState
         );
@@ -378,8 +378,8 @@ describe("Roles Store", () => {
             ...defaultPayload,
             state: {
               ...defaultPayload.state,
-              paginationLimit: 5
-            }
+              paginationLimit: 5,
+            },
           },
           defaultScrollState
         );
@@ -389,7 +389,7 @@ describe("Roles Store", () => {
       it("calls scrollState.complete when there aren't new roles", async () => {
         apolloQuerySpy.mockReturnValue(
           Promise.resolve({
-            data: { rolesSearch: [] }
+            data: { rolesSearch: [] },
           } as ApolloQueryResult<unknown>)
         );
         await rolesStore.actions.loadRoles(defaultPayload, defaultScrollState);

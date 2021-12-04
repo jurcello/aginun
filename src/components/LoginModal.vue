@@ -115,18 +115,18 @@ export default Vue.extend({
   name: "LoginModal",
   data() {
     return {
-      loginModal: (null as unknown) as Modal,
+      loginModal: null as unknown as Modal,
       mattermostContact,
       username: !isProduction() ? "kaj-dev" : "",
       password: !isProduction() ? "test" : "",
       serverError: "",
-      serverLoading: false
+      serverLoading: false,
     };
   },
   components: {
     ValidationProvider,
     ValidationObserver,
-    PulseLoader
+    PulseLoader,
   },
   methods: {
     ...mapActions("user", ["login"]),
@@ -136,16 +136,16 @@ export default Vue.extend({
       this.password = !isProduction() ? "test" : "";
       this.serverLoading = false;
       this.serverError = "";
-      (this.$refs.login_form as InstanceType<
-        typeof ValidationProvider
-      >).reset();
+      (
+        this.$refs.login_form as InstanceType<typeof ValidationProvider>
+      ).reset();
     },
     async handleSubmit() {
       const { username, password } = this;
       this.serverLoading = true;
       this.serverError = await this.login({
         username,
-        password
+        password,
       });
       this.serverLoading = false;
 
@@ -156,7 +156,7 @@ export default Vue.extend({
 
       this.resetForm();
       this.loginModal.hide();
-    }
+    },
   },
   mounted() {
     this.loginModal = new Modal(this.$refs.loginModal as Element);
@@ -171,6 +171,6 @@ export default Vue.extend({
   },
   beforeDestroy() {
     this.loginModal.dispose();
-  }
+  },
 });
 </script>

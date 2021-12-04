@@ -37,7 +37,7 @@ import { AlertType } from "@/store/modules/alerts";
 export default Vue.extend({
   name: "FeedbackAlert",
   data: () => ({
-    toast: (null as unknown) as Toast
+    toast: null as unknown as Toast,
   }),
   mounted() {
     this.toast = new Toast(this.$refs.toast as Element);
@@ -46,10 +46,10 @@ export default Vue.extend({
     ...mapState("alerts", ["alert", "alertOn"]),
     isSuccess() {
       return this.alert.type === AlertType.Success;
-    }
+    },
   },
   methods: {
-    ...mapMutations("alerts", ["disableAlert"])
+    ...mapMutations("alerts", ["disableAlert"]),
   },
   beforeDestroy() {
     this.toast?.dispose();
@@ -58,7 +58,7 @@ export default Vue.extend({
     alertOn(show) {
       const action = show ? "show" : "hide";
       this.toast[action]();
-    }
-  }
+    },
+  },
 });
 </script>

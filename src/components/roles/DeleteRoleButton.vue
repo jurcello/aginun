@@ -23,7 +23,7 @@ export default {
   name: "DeleteRoleButton",
   data() {
     return {
-      deletePopover: null
+      deletePopover: null,
     };
   },
   mounted() {
@@ -31,11 +31,11 @@ export default {
       html: true,
       content: this.$refs.deletePopover,
       trigger: "focus",
-      placement: "bottom"
+      placement: "bottom",
     });
   },
   beforeDestroy() {
     this.deletePopover.dispose();
-  }
+  },
 };
 </script>
