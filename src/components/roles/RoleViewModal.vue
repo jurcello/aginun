@@ -140,9 +140,7 @@
               </div>
               <div class="mt-4">
                 <a
-                  :href="`mailto:${role.email}?subject=${$t(
-                    'Role application'
-                  )}: ${role.title[$i18n.locale]}`"
+                  :href="`mailto:${role.email}`"
                   target="_blank"
                   class="btn btn-primary px-4"
                   >{{ $t("Apply") }}</a

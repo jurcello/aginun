@@ -1,9 +1,7 @@
 <template>
   <div>
     <icon-link
-      :href="`mailto:${role.email}?subject=${$t('Role application')}: ${
-        role.title
-      }`"
+      :href="`mailto:${role.email}`"
       :link-text="role.email"
       :label="$t('Email')"
       icon="envelope"
