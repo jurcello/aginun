@@ -98,7 +98,7 @@
               <h4>
                 {{ $t("Responsibilities ") }}
               </h4>
-              <p>
+              <p class="white-space-pre-line">
                 {{ role.responsibilities[$i18n.locale] }}
               </p>
               <div class="row gx-5">
