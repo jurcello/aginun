@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.6 (Debian 12.6-1.pgdg100+1)
--- Dumped by pg_dump version 12.6 (Debian 12.6-1.pgdg100+1)
+-- Dumped from database version 12.9 (Debian 12.9-1.pgdg110+1)
+-- Dumped by pg_dump version 12.9 (Debian 12.9-1.pgdg110+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -33,7 +33,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner:
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
@@ -133,7 +133,6 @@ CREATE TABLE public.role (
     "workingCircleId" integer NOT NULL,
     "localGroupId" integer NOT NULL,
     "filledDate" timestamp with time zone,
-    "creatorId" integer,
     responsibilities jsonb NOT NULL,
     email text NOT NULL,
     phone text,
@@ -142,6 +141,7 @@ CREATE TABLE public.role (
     title jsonb NOT NULL,
     description jsonb,
     "timeCommitment" jsonb,
+    "authorId" text NOT NULL,
     CONSTRAINT description_has_translations CHECK (public.has_translations(description)),
     CONSTRAINT requirements_has_translations CHECK (public.has_translations(requirements)),
     CONSTRAINT responsibilities_has_translations CHECK (public.has_translations(responsibilities)),
@@ -555,7 +555,7 @@ COPY hdb_catalog.hdb_cron_events (id, trigger_name, scheduled_time, additional_p
 --
 
 COPY hdb_catalog.hdb_metadata (id, metadata, resource_version) FROM stdin;
-1	{"sources":[{"kind":"postgres","name":"default","tables":[{"select_permissions":[{"role":"public","permission":{"columns":["alive"],"filter":{}}},{"role":"user","permission":{"columns":["alive"],"filter":{}}}],"table":{"schema":"public","name":"config"}},{"select_permissions":[{"role":"public","permission":{"columns":["ISO_639_1"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["ISO_639_1"],"filter":{}}}],"is_enum":true,"table":{"schema":"public","name":"language"}},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"localGroup_aggregate","select_by_pk":"localGroup","select":"localGroups"},"custom_column_names":{}},"table":{"schema":"public","name":"localGroup"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"localGroupId","table":{"schema":"public","name":"role"}}},"name":"roles"}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["createdDate","creatorId","description","dueDate","email","filledDate","id","localGroupId","mattermostId","phone","requirements","responsibilities","timeCommitment","timeCommitmentMax","timeCommitmentMin","title","workingCircleId"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"object_relationships":[{"using":{"foreign_key_constraint_on":"localGroupId"},"name":"localGroup"},{"using":{"foreign_key_constraint_on":"workingCircleId"},"name":"workingCircle"}],"insert_permissions":[{"role":"user","permission":{"backend_only":false,"check":{},"columns":["creatorId","id","localGroupId","timeCommitmentMax","timeCommitmentMin","workingCircleId","description","requirements","responsibilities","timeCommitment","title","email","mattermostId","phone","createdDate","dueDate","filledDate"]}}],"configuration":{"custom_root_fields":{"select_aggregate":"roles_aggregate","select_by_pk":"role","select":"roles"},"custom_column_names":{}},"table":{"schema":"public","name":"role"},"update_permissions":[{"role":"user","permission":{"check":{},"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","creatorId","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment"],"filter":{}}}],"delete_permissions":[{"role":"user","permission":{"filter":{}}}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"workingCircles_aggregate","select_by_pk":"workingCircle","select":"workingCircles"},"custom_column_names":{}},"table":{"schema":"public","name":"workingCircle"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"workingCircleId","table":{"schema":"public","name":"role"}}},"name":"roles"}]}],"configuration":{"connection_info":{"database_url":{"from_env":"HASURA_GRAPHQL_DATABASE_URL"},"pool_settings":{"retries":1,"idle_timeout":180,"max_connections":50}}},"functions":[{"function":{"schema":"public","name":"rolesSearch"}}]}],"version":3}	548
+1	{"sources":[{"kind":"postgres","name":"default","tables":[{"select_permissions":[{"role":"public","permission":{"columns":["alive"],"filter":{}}},{"role":"user","permission":{"columns":["alive"],"filter":{}}}],"table":{"schema":"public","name":"config"}},{"select_permissions":[{"role":"public","permission":{"columns":["ISO_639_1"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["ISO_639_1"],"filter":{}}}],"is_enum":true,"table":{"schema":"public","name":"language"}},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"localGroup_aggregate","select_by_pk":"localGroup","select":"localGroups"},"custom_column_names":{}},"table":{"schema":"public","name":"localGroup"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"localGroupId","table":{"schema":"public","name":"role"}}},"name":"roles"}]},{"select_permissions":[{"role":"public","permission":{"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment","authorId"],"filter":{}}},{"role":"user","permission":{"columns":["id","dueDate","createdDate","timeCommitmentMin","timeCommitmentMax","workingCircleId","localGroupId","filledDate","responsibilities","email","phone","mattermostId","requirements","title","description","timeCommitment","authorId"],"filter":{}}}],"object_relationships":[{"using":{"foreign_key_constraint_on":"localGroupId"},"name":"localGroup"},{"using":{"foreign_key_constraint_on":"workingCircleId"},"name":"workingCircle"}],"insert_permissions":[{"role":"user","permission":{"backend_only":false,"set":{"authorId":"x-hasura-User-Id"},"check":{},"columns":["description","dueDate","email","filledDate","localGroupId","mattermostId","phone","requirements","responsibilities","timeCommitment","timeCommitmentMax","timeCommitmentMin","title","workingCircleId"]}}],"configuration":{"custom_root_fields":{"select_aggregate":"roles_aggregate","select_by_pk":"role","select":"roles"},"custom_column_names":{}},"table":{"schema":"public","name":"role"},"update_permissions":[{"role":"user","permission":{"set":{"authorId":"x-hasura-User-Id"},"check":{},"columns":["description","dueDate","email","filledDate","localGroupId","mattermostId","phone","requirements","responsibilities","timeCommitment","timeCommitmentMax","timeCommitmentMin","title","workingCircleId"],"filter":{"authorId":{"_eq":"X-Hasura-User-Id"}}}}],"delete_permissions":[{"role":"user","permission":{"filter":{"authorId":{"_eq":"X-Hasura-User-Id"}}}}]},{"select_permissions":[{"role":"public","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}},{"role":"user","permission":{"allow_aggregations":true,"columns":["id","title","color"],"filter":{}}}],"configuration":{"custom_root_fields":{"select_aggregate":"workingCircles_aggregate","select_by_pk":"workingCircle","select":"workingCircles"},"custom_column_names":{}},"table":{"schema":"public","name":"workingCircle"},"array_relationships":[{"using":{"foreign_key_constraint_on":{"column":"workingCircleId","table":{"schema":"public","name":"role"}}},"name":"roles"}]}],"configuration":{"connection_info":{"use_prepared_statements":false,"database_url":{"from_env":"HASURA_GRAPHQL_DATABASE_URL"},"isolation_level":"read-committed","pool_settings":{"connection_lifetime":600,"retries":1,"idle_timeout":180,"max_connections":50}}},"functions":[{"function":{"schema":"public","name":"rolesSearch"}}]}],"version":3}	592
 \.
 
 
@@ -580,7 +580,7 @@ COPY hdb_catalog.hdb_scheduled_events (id, webhook_conf, scheduled_time, retry_c
 --
 
 COPY hdb_catalog.hdb_schema_notifications (id, notification, resource_version, instance_id, updated_at) FROM stdin;
-1	{"metadata":false,"remote_schemas":[],"sources":[]}	548	487ec978-fe2c-4512-bec9-d9090b464c04	2021-04-19 07:21:25.985605+00
+1	{"metadata":true,"remote_schemas":[],"sources":["default"]}	592	87f25044-e102-4e53-984e-ef5e9e2b9828	2021-04-19 07:21:25.985605+00
 \.
 
 
@@ -598,7 +598,7 @@ COPY hdb_catalog.hdb_source_catalog_version (version, upgraded_on) FROM stdin;
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-885fc441-c38d-4174-9e24-7636065b14e6	45	2021-04-19 07:21:20.654296+00	{}	{"console_notifications": {"admin": {"date": "2021-06-05T11:24:32.356Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
+885fc441-c38d-4174-9e24-7636065b14e6	47	2021-12-06 19:03:55.560483+00	{}	{"console_notifications": {"admin": {"date": "2021-12-06T19:32:54.005Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
 \.
 
 
@@ -654,6 +654,14 @@ COPY public."localGroup" (id, title) FROM stdin;
 
 
 --
+-- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.role (id, "dueDate", "createdDate", "timeCommitmentMin", "timeCommitmentMax", "workingCircleId", "localGroupId", "filledDate", responsibilities, email, phone, "mattermostId", requirements, title, description, "timeCommitment", "authorId") FROM stdin;
+\.
+
+
+--
 -- Data for Name: workingCircle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -684,7 +692,7 @@ SELECT pg_catalog.setval('public.local_group_id_seq', 25, true);
 -- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.role_id_seq', 177, true);
+SELECT pg_catalog.setval('public.role_id_seq', 199, true);
 
 
 --
@@ -866,10 +874,24 @@ CREATE INDEX event_log_trigger_name_idx ON hdb_catalog.event_log USING btree (tr
 
 
 --
+-- Name: hdb_cron_event_invocation_event_id; Type: INDEX; Schema: hdb_catalog; Owner: postgres
+--
+
+CREATE INDEX hdb_cron_event_invocation_event_id ON hdb_catalog.hdb_cron_event_invocation_logs USING btree (event_id);
+
+
+--
 -- Name: hdb_cron_event_status; Type: INDEX; Schema: hdb_catalog; Owner: postgres
 --
 
 CREATE INDEX hdb_cron_event_status ON hdb_catalog.hdb_cron_events USING btree (status);
+
+
+--
+-- Name: hdb_cron_events_unique_scheduled; Type: INDEX; Schema: hdb_catalog; Owner: postgres
+--
+
+CREATE UNIQUE INDEX hdb_cron_events_unique_scheduled ON hdb_catalog.hdb_cron_events USING btree (trigger_name, scheduled_time) WHERE (status = 'scheduled'::text);
 
 
 --

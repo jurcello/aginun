@@ -74,7 +74,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { ValidationProvider } from "vee-validate";
-import { Translation } from "@/i18n/models/translation";
+import { Translation } from "@/models/translation";
 import { createTranslation } from "@/i18n/utils/create-translation";
 
 export default Vue.extend({

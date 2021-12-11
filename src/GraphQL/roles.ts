@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 const RoleSummaryFieldsFragment = gql`
   fragment RoleSummaryFields on role {
     id
+    authorId
     title
     timeCommitmentMin
     timeCommitmentMax
@@ -15,6 +16,7 @@ const RoleSummaryFieldsFragment = gql`
 const RoleFieldsFragment = gql`
   fragment RoleFields on role {
     id
+    authorId
     title
     responsibilities
     description

@@ -16,8 +16,11 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    curly: ["error"],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prettier/prettier": ["error", { arrowParens: "always" }],
   },
   overrides: [
     {

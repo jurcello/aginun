@@ -9,7 +9,9 @@ import {
   DeleteRoleMutation,
   FillRoleMutation,
 } from "@/GraphQL/roles";
+import { cleanRoleInput } from "@/utils/cleanRoleInput";
 import router from "@/router";
+import { Role } from "@/models/role";
 
 export interface FiltersState {
   search: string;
@@ -19,7 +21,7 @@ export interface FiltersState {
 }
 
 export interface RolesState {
-  roles: unknown[];
+  roles: Role[];
   isLoadingRoles: boolean;
   paginationLimit: number;
   paginationOffset: number;
@@ -106,20 +108,17 @@ export default {
   actions: {
     async createRole({ commit, dispatch }, newRole) {
       try {
-        await apolloClient.mutate({
+        const response = await apolloClient.mutate({
           mutation: CreateRoleMutation,
-          variables: { input: [newRole] },
-          update: (
-            store,
-            {
-              data: {
-                insert_role: { returning },
-              },
-            }
-          ) => {
-            commit("addRole", returning[0]);
-          },
+          variables: { input: [cleanRoleInput(newRole)] },
         });
+        const returning = response.data.insert_role.returning;
+
+        if (!returning.length) {
+          throw new Error();
+        }
+
+        commit("addRole", returning[0]);
         dispatch("alerts/displaySuccess", i18n.t("Role created"), {
           root: true,
         });
@@ -136,21 +135,18 @@ export default {
     },
     async updateRole({ commit, dispatch }, newRole) {
       try {
-        await apolloClient.mutate({
+        const response = await apolloClient.mutate({
           mutation: UpdateRoleMutation,
-          variables: { id: newRole.id, input: newRole },
-          update: (
-            store,
-            {
-              data: {
-                update_role: { returning },
-              },
-            }
-          ) => {
-            commit("editRole", returning[0]);
-            dispatch("loadRoles");
-          },
+          variables: { id: newRole.id, input: cleanRoleInput(newRole) },
         });
+        const returning = response.data.update_role.returning;
+
+        if (!returning.length) {
+          throw new Error();
+        }
+
+        commit("editRole", returning[0]);
+        dispatch("loadRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
           root: true,
         });
@@ -191,13 +187,18 @@ export default {
     },
     async deleteRole({ commit, dispatch }, roleID) {
       try {
-        await apolloClient.mutate({
+        const response = await apolloClient.mutate({
           mutation: DeleteRoleMutation,
           variables: { id: roleID },
-          update: () => {
-            commit("deleteRole", roleID);
-          },
         });
+
+        const affectedRows = response.data.delete_role.affected_rows;
+
+        if (!affectedRows.length) {
+          throw new Error();
+        }
+
+        commit("deleteRole", roleID);
         dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
           root: true,
         });

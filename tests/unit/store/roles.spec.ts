@@ -7,6 +7,8 @@ import { apolloClient } from "@/plugins/vue-apollo";
 import { ApolloQueryResult } from "apollo-client";
 import i18n from "@/i18n/i18n";
 import router from "@/router";
+import { Role } from "@/models/role";
+import { createTranslation } from "@/i18n/utils/create-translation";
 
 jest.mock("lodash/throttle", () => jest.fn((fn) => fn));
 jest.mock("@/router", () => ({
@@ -21,15 +23,15 @@ describe("Roles Store", () => {
   const roles = [
     {
       id: 1,
-      title: "Role 1",
+      title: createTranslation({ en: "Role 1" }),
     },
     {
       id: 2,
-      title: "Role 2",
+      title: createTranslation({ en: "Role 2" }),
     },
   ];
   const mockState: Partial<RolesState> = {
-    roles,
+    roles: roles as Role[],
   };
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
   const apolloMutateSpy = jest.spyOn(apolloClient, "mutate");
@@ -111,13 +113,13 @@ describe("Roles Store", () => {
           roles: [
             {
               id: 1,
-              title: "Role 1",
+              title: createTranslation({ en: "Role 1" }),
             },
           ],
         };
         const newRole = {
           id: 2,
-          title: "Role 2",
+          title: createTranslation({ en: "Role 2" }),
         };
         rolesStore.mutations.addRole(state, newRole);
         expect(state.roles[0]).toBe(newRole);
@@ -132,7 +134,7 @@ describe("Roles Store", () => {
         rolesStore.mutations.deleteRole(state, 1);
         expect(state.roles[0]).toEqual({
           id: 2,
-          title: "Role 2",
+          title: createTranslation({ en: "Role 2" }),
         });
       });
     });
@@ -155,7 +157,7 @@ describe("Roles Store", () => {
         };
         const editedRole = {
           id: 1,
-          title: "Role 1 edited",
+          title: createTranslation({ en: "Role 1 edited" }),
         };
         rolesStore.mutations.editRole(state, editedRole);
         expect(state.roles[0]).toBe(editedRole);
@@ -240,14 +242,22 @@ describe("Roles Store", () => {
 
   describe("actions", () => {
     const commit = jest.fn();
-    apolloMutateSpy.mockReturnValue(Promise.resolve({}));
 
     describe("createRole", () => {
       it("calls apolloClient.mutate with the role to create", async () => {
+        apolloMutateSpy.mockReturnValue(
+          Promise.resolve({
+            data: {
+              insert_role: {
+                returning: [{}, {}],
+              },
+            },
+          })
+        );
         const dispatch = jest.fn(() => Promise.resolve());
         const newRole = {
           id: 3,
-          title: "Role 3",
+          title: createTranslation({ en: "Role 3" }),
         };
         await rolesStore.actions.createRole({ commit, dispatch }, newRole);
         expect(apolloMutateSpy).toBeCalled();
@@ -261,10 +271,19 @@ describe("Roles Store", () => {
 
     describe("updateRole", () => {
       it("calls apolloClient.mutate with the role to update", async () => {
+        apolloMutateSpy.mockReturnValue(
+          Promise.resolve({
+            data: {
+              update_role: {
+                returning: [{}, {}],
+              },
+            },
+          })
+        );
         const dispatch = jest.fn(() => Promise.resolve());
         const updatedRole = {
           id: 3,
-          title: "Role 3",
+          title: createTranslation({ en: "Role 3" }),
         };
         await rolesStore.actions.updateRole({ commit, dispatch }, updatedRole);
         expect(apolloMutateSpy).toBeCalled();

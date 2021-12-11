@@ -425,13 +425,12 @@ export default {
         description: this.parseTranslation(this.role.description),
         requirements: this.parseTranslation(this.role.requirements),
       };
+
       let error;
 
       if (this.editRole) {
-        error = await this.updateRole({
-          id: this.editRole.id,
-          ...role,
-        });
+        role.id = this.editRole.id;
+        error = await this.updateRole(role);
       } else {
         error = await this.createRole(role);
       }
@@ -439,9 +438,7 @@ export default {
       if (!error) {
         this.$emit("close");
         this.resetState();
-        this.$nextTick(() => {
-          this.$refs.form.reset();
-        });
+        this.$refs.form.reset();
       }
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim(),

@@ -18,7 +18,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "stylelint": "stylelint **/*.scss",
     "start": "vue-cli-service serve",
-    "docker": "docker-compose --file docker/docker-compose.yml --file docker/docker-compose.local-override.yml --env-file ./docker/.env.local up"
+    "docker": "docker-compose --file docker/docker-compose.yml --file docker/docker-compose.local-override.yml --env-file ./docker/.env.local up",
+    "docker-down": "docker-compose --file docker/docker-compose.yml --file docker/docker-compose.local-override.yml --env-file ./docker/.env.local down"
   },
   "dependencies": {
     "@saeris/vue-spinners": "^1.0.8",

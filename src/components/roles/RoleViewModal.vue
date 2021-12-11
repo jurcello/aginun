@@ -234,13 +234,13 @@ export default {
   methods: {
     ...mapActions("roles", ["fillRole", "deleteRole"]),
     async onDeleteRole() {
-      await this.deleteRole(this.role.id);
-
-      this.roleViewModal.toggle();
+      const error = await this.deleteRole(this.role.id);
+      if (!error) {
+        this.roleViewModal.toggle();
+      }
     },
     async onFillRole() {
       const error = await this.fillRole(this.role.id);
-
       if (!error) {
         this.roleViewModal.toggle();
       }

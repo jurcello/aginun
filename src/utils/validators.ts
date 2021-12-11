@@ -5,7 +5,9 @@ export const makeObjectValidator = (objectExpectedStructure: {
 }) => {
   return (objectToValidate: { [x: string]: unknown }) => {
     return Object.keys(objectExpectedStructure).every((key) => {
-      if (!has(objectToValidate, key)) return false;
+      if (!has(objectToValidate, key)) {
+        return false;
+      }
 
       const actualType = typeof objectToValidate[key];
       const expectedType = objectExpectedStructure[key];

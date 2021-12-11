@@ -1,4 +1,4 @@
-import { Translation } from "@/i18n/models/translation";
+import { Translation } from "@/models/translation";
 
 export function createTranslation(value: Partial<Translation> = {}) {
   return {
