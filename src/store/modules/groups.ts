@@ -18,6 +18,7 @@ export default {
     localGroupsMap: (state) =>
       state.localGroups.reduce((result, group) => {
         const { id, ...details } = group;
+
         result[id] = details;
 
         return result;
@@ -25,6 +26,7 @@ export default {
     workingCirclesMap: (state) =>
       state.workingCircles.reduce((result, group) => {
         const { id, ...details } = group;
+
         result[id] = details;
 
         return result;

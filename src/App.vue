@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-bar />
+    <nav-bar />
     <feedback-alert />
     <main>
       <router-view />
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import AppBar from "@/components/AppBar.vue";
+import NavBar from "@/components/NavBar.vue";
 import FeedbackAlert from "@/components/FeedbackAlert.vue";
 
 export default {
   name: "App",
   components: {
-    AppBar,
+    NavBar,
     FeedbackAlert,
   },
 };
@@ -23,9 +23,5 @@ export default {
 <style lang="scss" scoped>
 main {
   padding-top: $navbar-height;
-
-  @include media-breakpoint-up(md) {
-    padding-top: $navbar-height-md;
-  }
 }
 </style>

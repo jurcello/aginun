@@ -1,56 +1,35 @@
 <template>
-  <div
-    class="form-floating floating-tags-input mb-3"
-    :class="{
-      'is-focused': isFocused,
-      'with-tags': selectedTags.length,
-    }"
-  >
-    <v-tags-input
-      placeholder=""
-      v-model="selectedTags"
-      :existing-tags="items"
-      :input-id="inputId"
-      :typeahead="true"
-      :typeahead-activation-threshold="activationThreshold"
-      :typeahead-hide-discard="true"
-      :only-existing-tags="true"
-      :text-field="itemText"
-      id-field="id"
-      typeahead-style="dropdown"
-      @focus="onFocus"
-      @blur="onBlur"
-      @tags-updated="onTagsUpdated"
+  <div class="floating-tags-input position-relative">
+    <vue-tags-input
+      v-model="tag"
+      :placeholder="placeholder"
+      :tags="selectedTags"
+      :autocomplete-items="autocompleteItems"
+      :add-only-from-autocomplete="true"
+      :autocomplete-min-length="0"
+      @tags-changed="onTagsUpdated"
     />
-    <label for="label">
+    <label class="position-absolute fw-bold">
       {{ label }}
     </label>
   </div>
 </template>
 <script>
 import { isArrayValid } from "@/utils/validators";
+import VueTagsInput from "@johmun/vue-tags-input";
 
 export default {
   name: "FloatingTagsInput",
+  components: {
+    VueTagsInput,
+  },
   data() {
-    const selectedTags = this.items.filter(({ id }) =>
-      this.selectedItemsIds.includes(id)
-    );
-
     return {
-      selectedTags,
-      activationThreshold: 1,
-      isFocused: false,
-      // The number of initial updates depends on the selected tags.
-      // See onTagsUpdated below.
-      initialUpdates: selectedTags.length,
+      tag: "",
+      selectedTags: this.getSelectedTags(this.selectedItemsIds),
     };
   },
   props: {
-    inputId: {
-      type: String,
-      required: true,
-    },
     items: {
       type: Array,
       required: true,
@@ -72,34 +51,38 @@ export default {
       type: String,
       required: true,
     },
-    itemText: {
+    placeholder: {
       type: String,
       required: true,
     },
   },
+  computed: {
+    autocompleteItems() {
+      return this.items
+        .filter((item) =>
+          item.title.toLowerCase().includes(this.tag.toLowerCase())
+        )
+        .map(({ title }) => ({ text: title }));
+    },
+  },
   methods: {
-    onBlur() {
-      const inputValue = document.querySelector(`#${this.inputId}`).value;
-
-      this.isFocused = Boolean(this.selectedTags.length || inputValue);
-    },
-    onFocus() {
-      this.isFocused = true;
-      this.activationThreshold = 0;
-    },
-    onTagsUpdated() {
-      // @tagsUpdated is fired for each tag when they're initialized, this is
-      // a workaround to prevent emitting updates for each of the initial tags.
-      if (this.initialUpdates) {
-        this.initialUpdates--;
-        return;
-      }
-
+    onTagsUpdated(tags) {
       this.$emit(
         "change",
-        this.selectedTags.map(({ id }) => id)
+        tags.map(
+          ({ text }) => this.items.find(({ title }) => title === text).id
+        )
       );
-      this.onBlur();
+    },
+    getSelectedTags(selectedItemsIds) {
+      return this.items
+        .filter(({ id }) => selectedItemsIds.includes(id))
+        .map(({ title }) => ({ text: title }));
+    },
+  },
+  watch: {
+    selectedItemsIds(selectedItemsIds) {
+      this.selectedTags = this.getSelectedTags(selectedItemsIds);
     },
   },
 };

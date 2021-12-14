@@ -1,18 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col py-3 py-md-5 px-md-5 roles-list min-vh-100">
-        <div v-if="loggedIn" class="d-md-none">
-          <button
-            type="button"
-            class="btn btn-primary d-inline-flex align-items-center"
-            @click="newRoleModal.show()"
-          >
-            <i class="bi bi-plus" style="font-size: 1.7rem; line-height: 1"></i>
-            {{ $t("New Role") }}
-          </button>
-          <hr />
-        </div>
+      <div class="col py-3 py-md-5 px-md-5 roles-list roles-list--with-sidebar">
         <router-view :key="$route.fullPath" />
         <div v-if="!!rolesSelectedLanguage.length" class="row g-3 g-md-4">
           <div
@@ -63,35 +52,6 @@
           <hr />
           <role-filters class="mx-1" inputPrefix="sidebar" />
         </div>
-        <div class="mb-3 me-3 position-fixed end-0 bottom-0 z-index-sticky">
-          <button
-            v-if="loggedIn"
-            type="button"
-            class="btn btn-primary d-inline-flex align-items-center"
-            @click="newRoleModal.show()"
-          >
-            <i class="bi bi-plus" style="font-size: 1.7rem; line-height: 1"></i>
-            {{ $t("New Role") }}
-          </button>
-        </div>
-      </div>
-    </div>
-    <div
-      ref="newRoleModal"
-      class="modal fade"
-      tabindex="-1"
-      aria-labelledby="new-role-modal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title">{{ $t("New role") }}</h2>
-          </div>
-          <div class="modal-body">
-            <role-form @close="newRoleModal.hide()" />
-          </div>
-        </div>
       </div>
     </div>
     <div
@@ -136,24 +96,16 @@
 import RoleCard from "@/components/roles/RoleCard.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
-import RoleForm from "@/components/roles/RoleForm.vue";
 import InfiniteLoading from "vue-infinite-loading";
 import SpinnerLoader from "@/components/SpinnerLoader.vue";
-import { Modal } from "bootstrap";
 
 export default {
   name: "RolesOverview",
   components: {
     RoleCard,
     RoleFilters,
-    RoleForm,
     InfiniteLoading,
     SpinnerLoader,
-  },
-  data() {
-    return {
-      newRoleModal: undefined,
-    };
   },
   computed: {
     ...mapState("roles", [
@@ -173,16 +125,6 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["loadRoles"]),
-  },
-  mounted() {
-    this.newRoleModal = new Modal(this.$refs.newRoleModal);
-
-    this.$refs.newRoleModal.addEventListener("hidden.bs.modal", () => {
-      this.$emit("closed");
-    });
-  },
-  beforeDestroy() {
-    this.newRoleModal.dispose();
   },
 };
 </script>

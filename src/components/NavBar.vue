@@ -20,10 +20,10 @@
           <li
             v-for="navItem in navItems"
             :key="navItem.path"
-            class="nav-item mx-1 my-2"
+            class="nav-item my-2 my-md-0 mx-md-2"
           >
             <router-link
-              class="nav-link px-2"
+              class="nav-link"
               active-class="active"
               :to="navItem.path"
               @click.native="navbar.hide()"
@@ -43,7 +43,7 @@
           v-else
           type="button"
           class="btn btn-outline-light login-button px-3"
-          @click="logout"
+          @click="logOut"
         >
           {{ $t("Logout") }}
         </button>
@@ -62,7 +62,7 @@ import { Collapse } from "bootstrap";
 import { mapActions } from "vuex";
 
 export default {
-  name: "AppBar",
+  name: "NavBar",
   components: {
     LanguageSelect,
     LoginModal,
@@ -71,12 +71,8 @@ export default {
     ...mapGetters({
       loggedIn: "user/loggedIn",
     }),
-  },
-  data() {
-    return {
-      navbar: null,
-      loginModalOpen: false,
-      navItems: [
+    navItems() {
+      const items = [
         {
           path: "/roles",
           label: this.$t("Roles"),
@@ -89,11 +85,26 @@ export default {
           path: "/support",
           label: this.$t("Support"),
         },
-      ],
+      ];
+
+      if (this.loggedIn) {
+        items.splice(1, 0, {
+          path: "/my-roles",
+          label: this.$t("My Roles"),
+        });
+      }
+
+      return items;
+    },
+  },
+  data() {
+    return {
+      navbar: null,
+      loginModalOpen: false,
     };
   },
   methods: {
-    ...mapActions("user", ["logout"]),
+    ...mapActions("user", ["logOut"]),
   },
   mounted() {
     this.navbar = new Collapse(this.$refs.navbar, {

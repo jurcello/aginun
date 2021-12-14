@@ -3,9 +3,8 @@ import alertsStore, { AlertsState, AlertType } from "@/store/modules/alerts";
 describe("Alerts Store", () => {
   describe("mutations", () => {
     describe("setAlert", () => {
-      it("updates the alertOn and alert state", () => {
+      it("updates the alert state", () => {
         const state: AlertsState = {
-          alertOn: false,
           alert: {},
         };
         const alert = {
@@ -14,19 +13,7 @@ describe("Alerts Store", () => {
         };
 
         alertsStore.mutations.setAlert(state, alert);
-        expect(state.alertOn).toBe(true);
         expect(state.alert).toBe(alert);
-      });
-    });
-
-    describe("disableAlert", () => {
-      it("updates the alertOn state", () => {
-        const state = {
-          alertOn: true,
-        };
-
-        alertsStore.mutations.disableAlert(state);
-        expect(state.alertOn).toBe(false);
       });
     });
   });
@@ -37,6 +24,7 @@ describe("Alerts Store", () => {
     describe("displaySuccess", () => {
       it("commits setAlert using the provided message", () => {
         const message = "success!";
+
         alertsStore.actions.displaySuccess({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,
@@ -48,6 +36,7 @@ describe("Alerts Store", () => {
     describe("displayError", () => {
       it("commits setAlert using the provided message", () => {
         const message = "error!";
+
         alertsStore.actions.displayError({ commit }, message);
         expect(commit).toBeCalledWith("setAlert", {
           message,

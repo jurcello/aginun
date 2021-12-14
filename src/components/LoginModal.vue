@@ -142,6 +142,7 @@ export default Vue.extend({
     },
     async handleSubmit() {
       const { username, password } = this;
+
       this.serverLoading = true;
       this.serverError = await this.login({
         username,
@@ -151,6 +152,7 @@ export default Vue.extend({
 
       if (this.serverError) {
         this.displayError(this.serverError);
+
         return;
       }
 

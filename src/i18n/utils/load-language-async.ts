@@ -21,6 +21,7 @@ export async function loadLanguageAsync(lang) {
       const { default: messages } = await import(
         /* webpackChunkName: "lang-[request]" */ `@/i18n/messages/${lang}.json`
       );
+
       i18n.setLocaleMessage(lang, messages);
     } catch {
       return;

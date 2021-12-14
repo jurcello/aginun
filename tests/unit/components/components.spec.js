@@ -19,6 +19,7 @@ describe("SpinnerLoader", () => {
   it("by default renders spinner and no text", () => {
     const wrapper = mountFunction();
     const spinnerTags = wrapper.findAll(spinnerSelector);
+
     expect(spinnerTags.length).toBeGreaterThan(0);
     expect(wrapper.find("p").exists()).toBeFalsy();
   });
@@ -26,6 +27,7 @@ describe("SpinnerLoader", () => {
   it("prop text is rendered", () => {
     const text = "text";
     const wrapper = mountFunction({ propsData: { text } });
+
     expect(wrapper.find("p").text()).toBe(text);
   });
 });
@@ -47,15 +49,15 @@ describe("AutocompleteCustom", () => {
         label,
         items,
         selectedItemsIds: [],
-        itemText: "title",
-        inputId: "id",
+        placeholder: "placeholder",
       },
-      stubs: ["v-tags-input"],
+      stubs: ["vue-tags-input"],
       ...options,
     });
 
   it("prop label is rendered", () => {
     const wrapper = mountFunction();
+
     expect(wrapper.find("label").text()).toBe(label);
   });
 
@@ -74,11 +76,11 @@ describe("AutocompleteCustom", () => {
         label,
         items,
         selectedItemsIds,
-        itemText: "title",
-        inputId: "id",
+        placeholder: "placeholder",
       },
     });
     const renderedItems = wrapper.findAll("v-chip__content");
+
     for (let i = 0; i < renderedItems.length; i += 1) {
       expect(renderedItems.at(i).text()).toBe(items[i].title);
     }
@@ -116,21 +118,25 @@ describe("IconLink", () => {
 
   it("href prop is rendered", () => {
     const wrapper = mountFunction();
+
     expect(wrapper.find("a").attributes("href")).toBe(href);
   });
 
   it("linkText prop is rendered", () => {
     const wrapper = mountFunction();
+
     expect(wrapper.find("a").text()).toBe(linkText);
   });
 
   it("label prop is rendered", () => {
     const wrapper = mountFunction();
+
     expect(wrapper.find(".row div:first-child").text()).toBe(label);
   });
 
   it("prop icon is rendered", () => {
     const wrapper = mountFunction();
+
     expect(wrapper.find(`i.bi-${icon}`).exists()).toBeTruthy();
   });
 });

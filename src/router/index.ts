@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import { rolesGuard, hasErrorsGuard } from "./guards";
+import { rolesGuard, hasErrorsGuard, myRolesGuard } from "./guards";
 import ErrorPage from "../views/ErrorPage.vue";
 import RolesOverview from "../views/RolesOverview.vue";
+import MyRoles from "../views/MyRoles.vue";
 import AboutPage from "../views/AboutPage.vue";
 import SupportPage from "../views/SupportPage.vue";
 import RoleViewModal from "../components/roles/RoleViewModal.vue";
@@ -16,6 +17,13 @@ const routes = [
     name: "roles",
     beforeEnter: rolesGuard,
     component: RolesOverview,
+    children: [{ path: "view/:id", component: RoleViewModal }],
+  },
+  {
+    path: "/my-roles",
+    name: "my-roles",
+    beforeEnter: myRolesGuard,
+    component: MyRoles,
     children: [{ path: "view/:id", component: RoleViewModal }],
   },
   {
@@ -33,10 +41,6 @@ const routes = [
     path: "/support",
     name: "support",
     component: SupportPage,
-  },
-  {
-    path: "/",
-    redirect: "/roles",
   },
   {
     // non-existent pages redirect to the home page

@@ -22,9 +22,9 @@
     "docker-down": "docker-compose --file docker/docker-compose.yml --file docker/docker-compose.local-override.yml --env-file ./docker/.env.local down"
   },
   "dependencies": {
+    "@johmun/vue-tags-input": "^2.1.0",
     "@saeris/vue-spinners": "^1.0.8",
-    "@voerro/vue-tagsinput": "^2.7.1",
-    "@vueform/slider": "^2.0.7",
+    "@vueform/slider": "^2.0.5",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
@@ -36,6 +36,7 @@
     "core-js": "^3.19.2",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "qs": "^6.9.4",
     "v-calendar": "^2.3.4",

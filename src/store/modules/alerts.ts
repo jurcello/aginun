@@ -1,6 +1,8 @@
 export interface AlertsState {
-  alertOn: boolean;
-  alert: unknown;
+  alert: {
+    message?: string;
+    type?: AlertType;
+  };
 }
 
 export enum AlertType {
@@ -11,16 +13,11 @@ export enum AlertType {
 export default {
   namespaced: true,
   state: {
-    alertOn: false,
     alert: {},
   },
   mutations: {
     setAlert(state, alert) {
       state.alert = alert;
-      state.alertOn = true;
-    },
-    disableAlert(state) {
-      state.alertOn = false;
     },
   },
   actions: {

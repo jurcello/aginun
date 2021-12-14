@@ -5,6 +5,7 @@ import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
   RolesSearchQuery,
+  MyRolesQuery,
   UpdateRoleMutation,
   DeleteRoleMutation,
   FillRoleMutation,
@@ -41,6 +42,7 @@ export default {
   namespaced: true,
   state: {
     roles: [],
+    myRoles: [],
     isLoadingRoles: true,
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
@@ -48,6 +50,8 @@ export default {
     selectedFilters: defaultFilters(),
   },
   getters: {
+    roles: (state) => state.roles,
+    myRoles: (state) => state.myRoles,
     getByID: (state) => (id) => state.roles.find((role) => role.id === id),
     isNewQuery: (state) => state.paginationOffset === 0,
     isUsingFilters(state) {
@@ -65,21 +69,22 @@ export default {
     addRole(state, newRole) {
       state.roles.unshift(newRole);
     },
-    deleteRole(state, roleID) {
-      const roleIndex = state.roles.findIndex((role) => role.id === roleID);
-      if (roleIndex > -1) {
-        state.roles.splice(roleIndex, 1);
-      }
-    },
     addRoles(state, newRoles) {
       state.roles.push(...newRoles);
     },
+    addMyRoles(state, newRoles) {
+      state.myRoles.push(...newRoles);
+    },
     editRole(state, newRole) {
       const roleIndex = state.roles.findIndex((role) => role.id === newRole.id);
+
       state.roles[roleIndex] = newRole;
     },
     setRoles(state, roles) {
       state.roles = roles;
+    },
+    setMyRoles(state, roles) {
+      state.myRoles = roles;
     },
     setLoadingState(state, isLoading) {
       state.isLoadingRoles = isLoading;
@@ -106,19 +111,20 @@ export default {
     },
   },
   actions: {
-    async createRole({ commit, dispatch }, newRole) {
+    async createRole({ dispatch, rootState }, newRole) {
+      newRole.authorId = rootState.user.authorId;
       try {
         const response = await apolloClient.mutate({
           mutation: CreateRoleMutation,
           variables: { input: [cleanRoleInput(newRole)] },
         });
-        const returning = response.data.insert_role.returning;
 
-        if (!returning.length) {
+        if (!response.data.insert_role.returning.length) {
           throw new Error();
         }
 
-        commit("addRole", returning[0]);
+        dispatch("loadRoles");
+        dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role created"), {
           root: true,
         });
@@ -130,23 +136,23 @@ export default {
             root: true,
           }
         );
+
         return e;
       }
     },
-    async updateRole({ commit, dispatch }, newRole) {
+    async updateRole({ dispatch }, newRole) {
       try {
         const response = await apolloClient.mutate({
           mutation: UpdateRoleMutation,
           variables: { id: newRole.id, input: cleanRoleInput(newRole) },
         });
-        const returning = response.data.update_role.returning;
 
-        if (!returning.length) {
+        if (!response.data.update_role.returning.length) {
           throw new Error();
         }
 
-        commit("editRole", returning[0]);
         dispatch("loadRoles");
+        dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
           root: true,
         });
@@ -158,19 +164,20 @@ export default {
             root: true,
           }
         );
+
         return e;
       }
     },
-    async fillRole({ commit, dispatch }, roleID) {
+    async fillRole({ dispatch }, roleID) {
       try {
         const now = new Date(Date.now()).toISOString();
+
         await apolloClient.mutate({
           mutation: FillRoleMutation,
           variables: { id: roleID, filledDate: now },
-          update: () => {
-            commit("deleteRole", roleID);
-          },
         });
+        dispatch("loadRoles");
+        dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role filled"), {
           root: true,
         });
@@ -182,23 +189,23 @@ export default {
             root: true,
           }
         );
+
         return e;
       }
     },
-    async deleteRole({ commit, dispatch }, roleID) {
+    async deleteRole({ dispatch }, roleID) {
       try {
         const response = await apolloClient.mutate({
           mutation: DeleteRoleMutation,
           variables: { id: roleID },
         });
 
-        const affectedRows = response.data.delete_role.affected_rows;
-
-        if (!affectedRows.length) {
+        if (!response.data.delete_role.affected_rows) {
           throw new Error();
         }
 
-        commit("deleteRole", roleID);
+        dispatch("loadRoles");
+        dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
           root: true,
         });
@@ -210,14 +217,38 @@ export default {
             root: true,
           }
         );
+
         return e;
       }
     },
+    loadMyRoles: throttle(async function ({ commit, dispatch, rootState }) {
+      commit("setLoadingState", true);
+
+      // load group data if it doesn't exist yet. Necessary for the next block
+      if (
+        !rootState.groups.localGroups.length ||
+        !rootState.groups.workingCircles.length
+      ) {
+        await dispatch("groups/loadGroups", {}, { root: true });
+      }
+
+      const { data } = await apolloClient.query({
+        query: MyRolesQuery,
+        variables: {
+          authorId: rootState.user.authorId,
+        },
+      });
+
+      commit("setMyRoles", data.roles);
+      commit("setLoadingState", false);
+    }, 500),
+    // eslint-disable-next-line func-names
     loadRoles: throttle(async function (
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
     ) {
       commit("setLoadingState", true);
+
       // load group data if it doesn't exist yet. Necessary for the next block
       if (
         !rootState.groups.localGroups.length ||
@@ -238,18 +269,20 @@ export default {
         ? state.selectedFilters.workingCircles
         : rootGetters["groups/workingCircleIds"];
 
+      const variables = {
+        limit: state.paginationLimit,
+        offset: state.paginationOffset,
+        localGroupIds,
+        workingCircleIds,
+        timeCommitmentMin: state.selectedFilters.timeCommitment[0],
+        timeCommitmentMax: state.selectedFilters.timeCommitment[1],
+        search: `%${state.selectedFilters.search}%`,
+        language: i18n.locale,
+      };
+
       const { data } = await apolloClient.query({
         query: RolesSearchQuery,
-        variables: {
-          limit: state.paginationLimit,
-          offset: state.paginationOffset,
-          localGroupIds,
-          workingCircleIds,
-          timeCommitmentMin: state.selectedFilters.timeCommitment[0],
-          timeCommitmentMax: state.selectedFilters.timeCommitment[1],
-          search: `%${state.selectedFilters.search}%`,
-          language: i18n.locale,
-        },
+        variables,
       });
 
       const newRoles = data.rolesSearch;
@@ -263,6 +296,7 @@ export default {
       if (newRoles.length) {
         scrollState?.loaded();
         commit("nextPagination");
+
         if (newRoles.length < state.paginationLimit) {
           scrollState?.complete();
         }

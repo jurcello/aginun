@@ -1,17 +1,31 @@
 .roles-list {
+  min-height: calc(100vh - #{$navbar-height});
   background-image: url("~@/assets/images/tree.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: 0 $navbar-height;
+  background-position: center $navbar-height;
   background-size: contain;
 
-  @include media-breakpoint-up(md) {
-    background-position: $grid-gutter-width $navbar-height-md;
-    background-size:
-      calc(
-        100vw - #{$sidebar-width} - (#{$grid-gutter-width} * 3)
-      )
-      calc(100vh - #{$content-top} - (#{$grid-gutter-width} * 2));
+  &--with-sidebar {
+    @include media-breakpoint-up(md) {
+      background-position: $grid-gutter-width $navbar-height;
+      background-size:
+        calc(
+          100vw - #{$sidebar-width} - (#{$grid-gutter-width} * 3)
+        )
+        calc(100vh - #{$content-top} - (#{$grid-gutter-width} * 2));
+    }
+
+    .card {
+      @include media-breakpoint-only(md) {
+        flex-direction: row;
+
+        .card-header {
+          padding: $card-cap-padding-y;
+          border-radius: $card-inner-border-radius 0 0 $card-inner-border-radius;
+        }
+      }
+    }
   }
 
   .card {
@@ -35,23 +49,14 @@
         border-radius: $card-inner-border-radius 0 0 $card-inner-border-radius;
       }
     }
-
-    @include media-breakpoint-only(md) {
-      flex-direction: row;
-
-      .card-header {
-        padding: $card-cap-padding-y;
-        border-radius: $card-inner-border-radius 0 0 $card-inner-border-radius;
-      }
-    }
   }
 }
 
 .filters-sidebar {
   // We need this to stack the filters sidebar under the navbar.
-  top: $navbar-height-md;
+  top: $navbar-height;
   padding-top: $grid-gutter-width;
-  height: calc(100vh - #{$navbar-height-md});
+  height: calc(100vh - #{$navbar-height});
   width: $sidebar-width;
   overflow: auto;
 }

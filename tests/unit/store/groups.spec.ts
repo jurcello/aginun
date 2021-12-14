@@ -2,6 +2,12 @@ import groupsStore, { GroupsState } from "@/store/modules/groups";
 import { apolloClient } from "@/plugins/vue-apollo";
 import { ApolloQueryResult } from "apollo-client";
 
+jest.mock("@/plugins/vue-apollo", () => ({
+  apolloClient: {
+    query: jest.fn(),
+  },
+}));
+
 describe("Groups Store", () => {
   const localGroups = [
     {
@@ -47,6 +53,7 @@ describe("Groups Store", () => {
     describe("setLocalGroups", () => {
       it("updates the localGroups state", () => {
         const state: Partial<GroupsState> = {};
+
         groupsStore.mutations.setLocalGroups(state, localGroups);
         expect(state.localGroups).toEqual(localGroups);
       });
@@ -55,6 +62,7 @@ describe("Groups Store", () => {
     describe("setWorkingCircles", () => {
       it("updates the workingCircles state", () => {
         const state: Partial<GroupsState> = {};
+
         groupsStore.mutations.setWorkingCircles(state, workingCircles);
         expect(state.workingCircles).toEqual(workingCircles);
       });
@@ -69,6 +77,7 @@ describe("Groups Store", () => {
     describe("loadGroups", () => {
       it("commits setLocalGroups and setWorkingCircles", async () => {
         const commit = jest.fn();
+
         await groupsStore.actions.loadGroups({ commit });
         expect(apolloQuerySpy).toBeCalled();
         expect(commit).nthCalledWith(1, "setLocalGroups", localGroups);

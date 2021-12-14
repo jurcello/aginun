@@ -7,7 +7,7 @@
       }"
     ></div>
     <div class="card-body">
-      <h4 :if="role.title[$i18n.locale]">
+      <h4 v-if="role.title[$i18n.locale]">
         {{ role.title[$i18n.locale] }}
       </h4>
       <div class="row gx-1">

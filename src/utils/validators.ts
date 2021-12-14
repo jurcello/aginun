@@ -11,6 +11,7 @@ export const makeObjectValidator = (objectExpectedStructure: {
 
       const actualType = typeof objectToValidate[key];
       const expectedType = objectExpectedStructure[key];
+
       return actualType === expectedType;
     });
   };
@@ -25,5 +26,6 @@ export const isArrayValid = (
 
 export const hrefValidator = (href: string) => {
   const validHrefPrefixes = ["http://", "https://", "mailto:", "tel:"];
+
   return validHrefPrefixes.some((hrefPrefix) => href.startsWith(hrefPrefix));
 };

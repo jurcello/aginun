@@ -7,6 +7,7 @@ module.exports = {
           /<style[^]+?<\/style>/gi,
           ""
         );
+
         return (
           contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) ||
           []
@@ -17,8 +18,6 @@ module.exports = {
         /^(?!(|.*?:)cursor-move).+-move$/,
         /^router-link(|-exact)-active$/,
         /data-v-.*/,
-        /^tags-input/,
-        /^typeahead-dropdown/,
         /^bi-/,
         /^fade/,
         /^modal-/,
@@ -26,6 +25,9 @@ module.exports = {
         /^show/,
         /^collapsing/,
         /^(bs-)?popover.*/,
+        /^bg-secondary/,
+        /^bg-danger/,
+        /^ti-/,
       ],
     }),
   ],

@@ -8,10 +8,7 @@ import { loadLanguageAsync } from "@/i18n/utils/load-language-async";
 import { loginCookieKey } from "./store/modules/user";
 import VueCookies from "vue-cookies";
 import VueCompositionAPI from "@vue/composition-api";
-import VoerroTagsInput from "@voerro/vue-tagsinput/src/main";
 import "@/styles/app.scss";
-
-Vue.component("v-tags-input", VoerroTagsInput);
 
 Vue.config.productionTip = false;
 
@@ -30,6 +27,7 @@ new Vue({
     if (Vue.$cookies.isKey(loginCookieKey)) {
       store.dispatch("user/initializeFromCookie");
     }
+
     await loadLanguageAsync(navigator.language.split("-")[0]);
   },
 }).$mount("#app");

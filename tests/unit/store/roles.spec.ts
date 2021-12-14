@@ -121,21 +121,9 @@ describe("Roles Store", () => {
           id: 2,
           title: createTranslation({ en: "Role 2" }),
         };
+
         rolesStore.mutations.addRole(state, newRole);
         expect(state.roles[0]).toBe(newRole);
-      });
-    });
-
-    describe("deleteRole", () => {
-      it("deletes a role from the state", () => {
-        const state = {
-          roles: [...roles],
-        };
-        rolesStore.mutations.deleteRole(state, 1);
-        expect(state.roles[0]).toEqual({
-          id: 2,
-          title: createTranslation({ en: "Role 2" }),
-        });
       });
     });
 
@@ -144,6 +132,7 @@ describe("Roles Store", () => {
         const state = {
           roles: [],
         };
+
         rolesStore.mutations.addRoles(state, roles);
         expect(state.roles[0]).toBe(roles[0]);
         expect(state.roles[1]).toBe(roles[1]);
@@ -159,6 +148,7 @@ describe("Roles Store", () => {
           id: 1,
           title: createTranslation({ en: "Role 1 edited" }),
         };
+
         rolesStore.mutations.editRole(state, editedRole);
         expect(state.roles[0]).toBe(editedRole);
       });
@@ -167,6 +157,7 @@ describe("Roles Store", () => {
     describe("setRoles", () => {
       it("sets the roles state", () => {
         const state: Partial<RolesState> = {};
+
         rolesStore.mutations.setRoles(state, roles);
         expect(state.roles).toBe(roles);
       });
@@ -175,6 +166,7 @@ describe("Roles Store", () => {
     describe("setLoadingState", () => {
       it("sets the isLoadingRoles state", () => {
         const state: Partial<RolesState> = {};
+
         rolesStore.mutations.setLoadingState(state, true);
         expect(state.isLoadingRoles).toBe(true);
       });
@@ -186,6 +178,7 @@ describe("Roles Store", () => {
           roles,
           paginationOffset: 10,
         };
+
         rolesStore.mutations.clearRoles(state);
         expect(state.roles).toEqual([]);
         expect(state.paginationOffset).toBe(0);
@@ -197,6 +190,7 @@ describe("Roles Store", () => {
         const state = {
           infiniteScrollId: false,
         };
+
         rolesStore.mutations.triggerReload(state);
         expect(state.infiniteScrollId).toBe(true);
       });
@@ -208,6 +202,7 @@ describe("Roles Store", () => {
           paginationOffset: 0,
           paginationLimit: 20,
         };
+
         rolesStore.mutations.nextPagination(state);
         expect(state.paginationOffset).toBe(20);
       });
@@ -218,6 +213,7 @@ describe("Roles Store", () => {
         const state = {
           selectedFilters: {},
         };
+
         rolesStore.mutations.setDefaultFilters(state);
         expect(state.selectedFilters).toEqual(defaultFilters());
       });
@@ -232,6 +228,7 @@ describe("Roles Store", () => {
           filterType: "search",
           filterValue: "newSearch",
         };
+
         rolesStore.mutations.setFilter(state, newFilter);
         expect(
           (state.selectedFilters as FiltersState)[newFilter.filterType]
@@ -255,11 +252,17 @@ describe("Roles Store", () => {
           })
         );
         const dispatch = jest.fn(() => Promise.resolve());
+        const rootState = {
+          user: {
+            authorId: "123",
+          },
+        };
         const newRole = {
           id: 3,
           title: createTranslation({ en: "Role 3" }),
         };
-        await rolesStore.actions.createRole({ commit, dispatch }, newRole);
+
+        await rolesStore.actions.createRole({ dispatch, rootState }, newRole);
         expect(apolloMutateSpy).toBeCalled();
         expect(dispatch).toBeCalledWith(
           "alerts/displaySuccess",
@@ -285,7 +288,8 @@ describe("Roles Store", () => {
           id: 3,
           title: createTranslation({ en: "Role 3" }),
         };
-        await rolesStore.actions.updateRole({ commit, dispatch }, updatedRole);
+
+        await rolesStore.actions.updateRole({ dispatch }, updatedRole);
         expect(apolloMutateSpy).toBeCalled();
         expect(dispatch).toBeCalledWith(
           "alerts/displaySuccess",
@@ -300,7 +304,8 @@ describe("Roles Store", () => {
     describe("fillRole", () => {
       it("calls apolloClient.mutate with the role to update", async () => {
         const dispatch = jest.fn(() => Promise.resolve());
-        await rolesStore.actions.fillRole({ commit, dispatch }, 1);
+
+        await rolesStore.actions.fillRole({ dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });
@@ -308,7 +313,8 @@ describe("Roles Store", () => {
     describe("deleteRole", () => {
       it("calls apolloClient.mutate with the role to delete", async () => {
         const dispatch = jest.fn(() => Promise.resolve());
-        await rolesStore.actions.deleteRole({ commit, dispatch }, 1);
+
+        await rolesStore.actions.deleteRole({ dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });
@@ -341,6 +347,7 @@ describe("Roles Store", () => {
         complete: jest.fn(),
         loaded: jest.fn(),
       };
+
       apolloQuerySpy.mockReturnValue(
         Promise.resolve({
           data: { rolesSearch: mockState.roles },
@@ -429,6 +436,7 @@ describe("Roles Store", () => {
       it("commits clearRoles and triggerReload", () => {
         const dispatch = jest.fn(() => Promise.resolve());
         const payload = { filterType: "search", filterValue: "newSearch" };
+
         rolesStore.actions.setFilter({ commit, dispatch }, payload);
         expect(commit).toBeCalledWith("setLoadingState", true);
         expect(commit).toBeCalledWith("setFilter", payload);
@@ -442,6 +450,7 @@ describe("Roles Store", () => {
     describe("setDefaultFilters", () => {
       it("commits the default filters and dispatches reloadRoles", () => {
         const dispatch = jest.fn(() => Promise.resolve());
+
         rolesStore.actions.setDefaultFilters({ commit, dispatch });
         expect(commit).toBeCalledWith("setLoadingState", true);
         expect(commit).toBeCalledWith("setDefaultFilters");

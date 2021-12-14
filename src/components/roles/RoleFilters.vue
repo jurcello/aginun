@@ -13,37 +13,43 @@
         {{ $t("Search by role title") }}
       </label>
     </div>
-    <h5 class="heading">{{ $t("Filter groups") }}</h5>
-    <floating-tags-input
-      v-if="localGroups.length"
-      :items="localGroups"
-      :selected-items-ids="selectedFilters.localGroups"
-      :label="$t('Local group')"
-      :input-id="`${inputPrefix}-local-group`"
-      item-text="title"
-      @change="updateFilter('localGroups', $event)"
-    />
-    <pulse-loader
-      v-else
-      class="d-flex justify-content-center my-4"
-      :size="10"
-    />
-    <floating-tags-input
-      v-if="workingCircleItems.length"
-      class="mb-4"
-      :items="workingCircleItems"
-      :selected-items-ids="selectedFilters.workingCircles"
-      :label="$t('Working circle')"
-      :input-id="`${inputPrefix}-working-circle`"
-      item-text="title"
-      @change="updateFilter('workingCircles', $event)"
-    />
-    <pulse-loader
-      v-else
-      class="d-flex justify-content-center my-4"
-      :size="10"
-    />
-    <h5 class="mb-5">{{ $t("Time Commitment") }}</h5>
+    <h5>{{ $t("Filter groups") }}</h5>
+    <div class="mb-3">
+      <floating-tags-input
+        v-if="localGroups.length"
+        :items="localGroups"
+        :selected-items-ids="selectedFilters.localGroups"
+        :label="$t('Local groups')"
+        :placeholder="$t('Add group')"
+        @change="updateFilter('localGroups', $event)"
+      />
+      <pulse-loader
+        v-else
+        class="d-flex justify-content-center my-4"
+        color="#3860aa"
+        :size="10"
+      />
+    </div>
+    <div class="mb-3">
+      <floating-tags-input
+        v-if="workingCircleItems.length"
+        :items="workingCircleItems"
+        :selected-items-ids="selectedFilters.workingCircles"
+        :label="$t('Working circles')"
+        :placeholder="$t('Add circle')"
+        @change="updateFilter('workingCircles', $event)"
+      />
+      <pulse-loader
+        v-else
+        class="d-flex justify-content-center my-4"
+        color="#3860aa"
+        :size="10"
+      />
+    </div>
+    <div class="mb-5">
+      <h5 class="mb-0">{{ $t("Time Commitment") }}</h5>
+      <span class="text-muted">({{ $t("hours/week") }})</span>
+    </div>
     <slider
       class="mx-2 px-1"
       :classes="{ tooltip: 'slider-tooltip h6 mb-0' }"
@@ -52,15 +58,17 @@
       :max="timeCommitmentRange.max"
       @change="updateFilter('timeCommitment', $event)"
     />
-    <div class="text-center mt-4 mb-3">
-      <button
-        class="btn btn-outline-secondary w-75"
-        :disabled="!isUsingFilters"
-        @click="clearFilters"
-      >
-        {{ $t("Clear filters") }}
-        <i class="bi bi-trash"></i>
-      </button>
+    <div class="mt-4 mb-3 d-flex justify-content-center">
+      <div :class="{ 'cursor-not-allowed': !isUsingFilters }">
+        <button
+          class="btn btn-outline-secondary"
+          :disabled="!isUsingFilters"
+          @click="clearFilters"
+        >
+          {{ $t("Clear filters") }}
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>

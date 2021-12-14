@@ -1,21 +1,21 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-import alerts from "./modules/alerts";
-import roles from "./modules/roles";
-import groups from "./modules/groups";
+import alerts, { AlertsState } from "./modules/alerts";
+import roles, { RolesState } from "./modules/roles";
+import groups, { GroupsState } from "./modules/groups";
 import errors from "./modules/errors";
-import user from "./modules/user";
+import user, { UserState } from "./modules/user";
 
 Vue.use(Vuex);
 
 export interface RootState extends Store<unknown> {
-  groups: Record<string, unknown>;
-  alerts: Record<string, unknown>;
-  roles: Record<string, unknown>;
+  groups: GroupsState;
+  alerts: AlertsState;
+  roles: RolesState;
   errors: {
     serverError: boolean;
   };
-  user: Record<string, unknown>;
+  user: UserState;
 }
 
 export const store = new Store<RootState>({

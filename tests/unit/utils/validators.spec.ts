@@ -10,6 +10,7 @@ describe("makeObjectValidator", () => {
     id: "number",
     title: "string",
   });
+
   it("returns a validator function based on the object passed", () => {
     expect(isFunction(validatorFn)).toBe(true);
   });
@@ -18,12 +19,14 @@ describe("makeObjectValidator", () => {
       id: 3,
       title: "title",
     };
+
     expect(validatorFn(objToValidate)).toBe(true);
   });
   it("returns false when the object doesn't match the structure", () => {
     const objToValidate = {
       id: "id",
     };
+
     expect(validatorFn(objToValidate)).toBe(false);
   });
 });
@@ -32,11 +35,13 @@ describe("isArrayValid", () => {
   it("returns true when all array items pass the validation function", () => {
     const array = ["a", "b", "c"];
     const result = isArrayValid(array, isString);
+
     expect(result).toBe(true);
   });
   it("returns false when all array items pass the validation function", () => {
     const array = [1, 2, 3];
     const result = isArrayValid(array, isString);
+
     expect(result).toBe(false);
   });
 });

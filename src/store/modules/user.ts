@@ -2,32 +2,49 @@ import i18n from "@/i18n/i18n";
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
 import Vue from "vue";
+import jwtDecode, { JwtPayload } from "jwt-decode";
+import router from "@/router";
 
 export const loginCookieKey = "loginToken";
+
+export interface UserState {
+  token: string;
+  authorId: string;
+}
 
 export default {
   namespaced: true,
   state: {
     token: "",
+    authorId: "",
   },
   getters: {
     loggedIn: (state) => !!state.token,
   },
   mutations: {
+    setAuthorID(state, id) {
+      state.authorId = id;
+    },
     setToken(state, token) {
       state.token = token;
     },
     setTokenCookie(state, { token, lifetime }) {
       Vue.$cookies.set(loginCookieKey, token, lifetime);
     },
-    removeToken(state) {
+    logOut(state) {
       state.token = null;
+      state.authorId = null;
       Vue.$cookies.remove(loginCookieKey);
     },
   },
   actions: {
     initializeFromCookie({ commit }) {
-      commit("setToken", Vue.$cookies.get(loginCookieKey));
+      const accesToken = Vue.$cookies.get(loginCookieKey);
+
+      commit("setToken", accesToken);
+      const { sub } = jwtDecode<JwtPayload>(accesToken);
+
+      commit("setAuthorID", sub);
     },
     async login({ commit, dispatch }, { username, password }) {
       const config = {
@@ -40,6 +57,8 @@ export default {
         client_id: "volunteerplatform",
         username,
         password,
+        // To check: do we need this?
+        scope: "openid",
       };
 
       try {
@@ -48,6 +67,9 @@ export default {
           qs.stringify(params),
           config
         );
+        const { sub } = jwtDecode<JwtPayload>(data.access_token);
+
+        commit("setAuthorID", sub);
         commit("setToken", data.access_token);
         commit("setTokenCookie", {
           token: data.access_token,
@@ -61,8 +83,14 @@ export default {
         );
       }
     },
-    logout({ commit, dispatch }) {
-      commit("removeToken");
+    logOut({ commit, dispatch }) {
+      commit("logOut");
+
+      if (router.currentRoute.name === "my-roles") {
+        router.push("/roles");
+        commit("roles/setMyRoles", [], { root: true });
+      }
+
       dispatch("alerts/displaySuccess", i18n.t("Logged out"), { root: true });
     },
   },

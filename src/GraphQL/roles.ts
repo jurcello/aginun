@@ -10,6 +10,7 @@ const RoleSummaryFieldsFragment = gql`
     dueDate
     workingCircleId
     localGroupId
+    authorId
   }
 `;
 
@@ -31,10 +32,11 @@ const RoleFieldsFragment = gql`
     filledDate
     workingCircleId
     localGroupId
+    authorId
   }
 `;
 
-/* 
+/*
 queries all roles with:
  - a title, responsibilities, description or requirements containing $search (for the selected language)
  - no filledDate
@@ -74,6 +76,15 @@ export const RolesSearchQuery = gql`
     }
   }
   ${RoleSummaryFieldsFragment}
+`;
+
+export const MyRolesQuery = gql`
+  query Roles($authorId: String!) {
+    roles(where: { authorId: { _eq: $authorId } }) {
+      ...RoleFields
+    }
+  }
+  ${RoleFieldsFragment}
 `;
 
 export const RoleQuery = gql`

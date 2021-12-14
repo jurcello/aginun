@@ -15,6 +15,7 @@ async function healthCheck() {
         }
       `,
     });
+
     store.dispatch("errors/serverError", !!errors);
   } catch (error) {
     store.dispatch("errors/serverError", !!error);
@@ -29,6 +30,7 @@ export async function rolesGuard(to, from, next) {
 
   if (store.state.errors.serverError) {
     next("/error");
+
     return;
   }
 
@@ -36,6 +38,7 @@ export async function rolesGuard(to, from, next) {
 
   if (!queryKeys.length) {
     next();
+
     return;
   }
 
@@ -52,6 +55,26 @@ export async function rolesGuard(to, from, next) {
       }
     });
 
+    next();
+  } else {
+    next({ name: "roles", replace: true });
+  }
+}
+
+export async function myRolesGuard(to, from, next) {
+  // We need this to only run the healthcheck once
+  if (store.state.errors.serverError === undefined) {
+    await healthCheck();
+  }
+
+  if (store.state.errors.serverError) {
+    next("/error");
+
+    return;
+  }
+
+  if (store.getters["user/loggedIn"]) {
+    store.dispatch("roles/loadMyRoles");
     next();
   } else {
     next({ name: "roles", replace: true });

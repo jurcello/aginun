@@ -323,6 +323,7 @@ extend("max", {
 extend("phone", {
   validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
+
     return phoneRegex.test(value);
   },
   message: i18n.t("You must enter a valid phone number"),
@@ -330,6 +331,7 @@ extend("phone", {
 extend("mattermost", {
   validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
+
     return mattermostRegex.test(value);
   },
   message: i18n.t("You must enter a valid Mattermost Id."),
@@ -380,7 +382,9 @@ export default {
         if (!editRole) {
           return;
         }
+
         const role = cloneDeep(editRole);
+
         // Delete this extra field we get from the query
         delete role.__typename;
 
@@ -400,6 +404,7 @@ export default {
     isFormInvalid(invalid) {
       if (this.formInvalidTooltip) {
         const action = invalid ? "disable" : "disable";
+
         this.formInvalidTooltip[action]();
       }
 

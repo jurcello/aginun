@@ -1,6 +1,12 @@
 .navbar {
   .nav-link {
+    transition: $transition-base;
     font-family: $headings-font-family;
+
+    &:hover,
+    &.active {
+      transform: scale(1.1);
+    }
   }
 
   .login-button:hover {

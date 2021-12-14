@@ -70,7 +70,7 @@
                 </p>
               </div>
               <div
-                v-if="!role.filledDate && loggedIn"
+                v-if="!role.filledDate && canEditRole"
                 class="d-flex flex-column flex-md-row"
               >
                 <div class="mb-2 mb-md-0 me-md-2">
@@ -146,7 +146,7 @@
                   >{{ $t("Apply") }}</a
                 >
                 <button
-                  v-if="loggedIn"
+                  v-if="canEditRole"
                   type="button"
                   class="btn btn-outline-secondary ms-2 px-4"
                   @click="onFillRole"
@@ -178,7 +178,7 @@
 <script>
 import ContactLinks from "@/components/roles/ContactLinks";
 import { RoleQuery } from "@/GraphQL/roles";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { Modal } from "bootstrap";
 import { PulseLoader } from "@saeris/vue-spinners";
 import RoleForm from "@/components/roles/RoleForm.vue";
@@ -209,8 +209,8 @@ export default {
     },
   },
   computed: {
+    ...mapState("user", ["authorId"]),
     ...mapGetters({
-      loggedIn: "user/loggedIn",
       localGroupsMap: "groups/localGroupsMap",
       workingCirclesMap: "groups/workingCirclesMap",
     }),
@@ -219,13 +219,19 @@ export default {
         date: this.formatDate(this.role.createdDate),
       });
     },
+    canEditRole() {
+      return (
+        this.role.authorId === this.authorId &&
+        this.$route.path.startsWith("/my-roles")
+      );
+    },
   },
   mounted() {
     this.roleViewModal = new Modal(this.$refs.roleViewModal);
     this.roleViewModal.toggle();
 
     this.$refs.roleViewModal.addEventListener("hidden.bs.modal", () => {
-      this.$router.push("/roles");
+      this.$router.back();
     });
   },
   beforeDestroy() {
@@ -235,12 +241,14 @@ export default {
     ...mapActions("roles", ["fillRole", "deleteRole"]),
     async onDeleteRole() {
       const error = await this.deleteRole(this.role.id);
+
       if (!error) {
         this.roleViewModal.toggle();
       }
     },
     async onFillRole() {
       const error = await this.fillRole(this.role.id);
+
       if (!error) {
         this.roleViewModal.toggle();
       }
@@ -252,6 +260,7 @@ export default {
         month: "long",
         day: "numeric",
       };
+
       return formattedDate.toLocaleDateString("en-GB", options);
     },
   },

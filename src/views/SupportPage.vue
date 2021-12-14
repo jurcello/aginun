@@ -88,10 +88,6 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - #{$navbar-height});
-
-  @media (min-width: 768px) {
-    min-height: calc(100vh - #{$navbar-height-md});
-  }
 }
 
 .fs-md-2 {

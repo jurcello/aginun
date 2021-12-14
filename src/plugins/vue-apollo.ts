@@ -19,6 +19,7 @@ const httpLink = createHttpLink({
 // set request headers based on current application state
 const dynamicLink = setContext((_, { headers }) => {
   const loginToken = user.state.token;
+
   return {
     headers: {
       ...headers,

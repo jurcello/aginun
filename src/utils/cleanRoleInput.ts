@@ -12,5 +12,6 @@ import { Role } from "@/models/role";
 export function cleanRoleInput(roleInput: Role) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, authorId, createdDate, ...role } = roleInput;
+
   return role;
 }

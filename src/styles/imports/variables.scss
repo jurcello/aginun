@@ -1,12 +1,12 @@
 // Color system
-$black: #000;
-$white: #fff;
 $xr-primary: #14aa7d;
 $xr-secondary: #3860aa;
 $xr-green: #4ea648;
 $xr-light-green: #bed276;
 $xr-light-blue: #75d0f1;
 
+$black: #000;
+$white: #fff;
 $gray-900: #212529;
 $primary: $xr-primary;
 $secondary: $xr-secondary;
@@ -46,7 +46,7 @@ $form-floating-input-padding-t: 1.525rem;
 $form-floating-input-padding-b: .525rem;
 
 // Navs
-$nav-link-font-size: 1.2rem;
+$nav-link-font-size: 1.4rem;
 $nav-link-padding-y: 0;
 $nav-link-padding-x: .5rem;
 
@@ -61,6 +61,7 @@ $navbar-dark-toggler-border-color: $white;
 $card-color: $body-color;
 
 // Toasts
+$toast-color: $white;
 $toast-box-shadow: 0 .5rem 1rem rgba($black, .5);
 
 // Modals
@@ -82,6 +83,5 @@ $offcanvas-title-line-height: 1;
 
 // Custom variables
 $navbar-height: 69px;
-$navbar-height-md: 80px;
 $content-top: calc(#{$navbar-height} + #{$grid-gutter-width});
 $sidebar-width: 300px;

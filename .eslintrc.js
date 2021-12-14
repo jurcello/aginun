@@ -17,6 +17,13 @@ module.exports = {
   },
   rules: {
     curly: ["error"],
+    "padding-line-between-statements": [
+      "error",
+      { blankLine: "always", prev: "*", next: "return" },
+      { blankLine: "always", prev: ["const", "let"], next: "*" },
+      { blankLine: "any", prev: ["const", "let"], next: ["const", "let"] },
+      { blankLine: "always", prev: "if", next: "*" },
+    ],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
