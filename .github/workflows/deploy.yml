@@ -14,6 +14,7 @@ jobs:
   deployment_job:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: wshihadeh/docker-deployment-action@v2
         with:
           remote_docker_host: ${{ secrets.HOST }}
@@ -21,8 +22,6 @@ jobs:
           ssh_public_key: ${{ secrets.PUBLIC_KEY }}
           deployment_mode: docker-compose
           copy_stack_file: false
-          deploy_path: /root/deployment-test
-          stack_file_name: ./docker/docker-compose.yml
-          pull_images_first: true
+          stack_file_name: docker/docker-compose.yml
           keep_files: 3
-          args: --file ./docker/docker-compose.prod-override.yml up -d --build
+          args: --file docker/docker-compose.prod-override.yml up -d --build
