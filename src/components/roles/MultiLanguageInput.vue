@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5>{{ label }}</h5>
-    <validation-provider
+    <ValidationProvider
       v-if="requiredLanguages.includes('nl')"
       ref="nlForm"
       tag="div"
@@ -34,8 +34,8 @@
       <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
         {{ errors[0] }}
       </div>
-    </validation-provider>
-    <validation-provider
+    </ValidationProvider>
+    <ValidationProvider
       v-if="requiredLanguages.includes('en')"
       ref="enForm"
       tag="div"
@@ -68,7 +68,7 @@
       <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
         {{ errors[0] }}
       </div>
-    </validation-provider>
+    </ValidationProvider>
   </div>
 </template>
 <script lang="ts">

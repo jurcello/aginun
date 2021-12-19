@@ -100,7 +100,7 @@
             path="Do you want to learn more about what XR is and what it stands for? {link}"
             tag="li"
           >
-            <template v-slot:link>
+            <template #link>
               <a
                 class="text-white"
                 :href="getHref(route.About)"
@@ -114,7 +114,7 @@
             path="Do you want to learn more about how XR works? {link}"
             tag="li"
           >
-            <template v-slot:link>
+            <template #link>
               <a
                 class="text-white"
                 :href="getHref(route.Structure)"
@@ -128,7 +128,7 @@
             path="Do you want to learn more about other ways to help out in XR? {link}"
             tag="li"
           >
-            <template v-slot:link>
+            <template #link>
               <a class="text-white" :href="getHref(route.Join)" target="_blank">
                 {{ $t("Visit the XR NL join page") }}
               </a>

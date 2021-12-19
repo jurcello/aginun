@@ -3,7 +3,7 @@
     <p v-if="text">
       {{ text }}
     </p>
-    <scale-loader :loading="true" color="#14aa37" :radius="1" />
+    <ScaleLoader :loading="true" color="#14aa37" :radius="1" />
   </div>
 </template>
 

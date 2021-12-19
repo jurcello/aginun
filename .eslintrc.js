@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:vue/essential",
+    "plugin:vue/strongly-recommended",
     "eslint:recommended",
     "@vue/typescript/recommended",
     "@vue/prettier",
@@ -25,6 +25,13 @@ module.exports = {
       { blankLine: "always", prev: "if", next: "*" },
     ],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "vue/component-name-in-template-casing": [
+      "error",
+      "PascalCase",
+      {
+        registeredComponentsOnly: true,
+      },
+    ],
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "prettier/prettier": ["error", { arrowParens: "always" }],

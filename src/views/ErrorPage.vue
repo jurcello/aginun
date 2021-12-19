@@ -12,7 +12,7 @@
       😧
     </p>
     <i18n path="Please email {contactEmail} for help." tag="p">
-      <template v-slot:contactEmail>
+      <template #contactEmail>
         <a :href="`mailto:${contactEmail}`" class="text-decoration-underline">{{
           contactEmail
         }}</a>

@@ -11,13 +11,13 @@
           >
             <router-link :to="`roles/view/${role.id}`">
               <div class="d-inline-block w-100">
-                <role-card :role="role" />
+                <RoleCard :role="role" />
               </div>
             </router-link>
           </div>
         </div>
         <div v-if="!roles.length && isLoadingRoles" class="text-center mt-5">
-          <spinner-loader :text="$t('Loading roles')" />
+          <SpinnerLoader :text="$t('Loading roles')" />
         </div>
         <div v-if="!roles.length && !isLoadingRoles" class="text-center">
           <div v-if="isUsingFilters">
@@ -28,11 +28,11 @@
             <p>{{ $t("There are currently no published roles.") }}</p>
           </div>
         </div>
-        <infinite-loading :identifier="infiniteScrollId" @infinite="loadRoles">
+        <InfiniteLoading :identifier="infiniteScrollId" @infinite="loadRoles">
           <template #spinner>
             <!-- show spinner without transition for loading additional roles -->
             <div v-if="!!roles.length" class="text-center mt-5">
-              <spinner-loader :text="$t('Loading roles')" />
+              <SpinnerLoader :text="$t('Loading roles')" />
             </div>
             <span v-else />
           </template>
@@ -42,7 +42,7 @@
           <template #no-more>
             <span />
           </template>
-        </infinite-loading>
+        </InfiniteLoading>
       </div>
       <div class="col-auto d-none d-md-block border-start">
         <div class="sticky-top filters-sidebar">
@@ -50,14 +50,14 @@
             {{ $t("Search for positions") }}
           </h4>
           <hr />
-          <role-filters class="mx-1" inputPrefix="sidebar" />
+          <RoleFilters class="mx-1" input-prefix="sidebar" />
         </div>
       </div>
     </div>
     <div
+      id="sidebar"
       class="offcanvas offcanvas-start"
       tabindex="-1"
-      id="sidebar"
       aria-labelledby="sidebar"
     >
       <div class="offcanvas-header">
@@ -65,7 +65,7 @@
       </div>
       <hr class="my-0" />
       <div class="offcanvas-body">
-        <role-filters inputPrefix="offcanvas" />
+        <RoleFilters input-prefix="offcanvas" />
         <button
           type="button"
           data-bs-toggle="offcanvas"

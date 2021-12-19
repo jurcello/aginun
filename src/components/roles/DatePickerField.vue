@@ -1,5 +1,5 @@
 <template>
-  <date-picker
+  <DatePicker
     v-model="model"
     trim-weeks
     :min-date="new Date().toISOString()"
@@ -8,7 +8,7 @@
     :select-attribute="selectAttribute"
     @input="$emit('input', $event)"
   >
-    <template v-slot="{ inputValue, inputEvents }">
+    <template #default="{ inputValue, inputEvents }">
       <div class="form-floating">
         <input
           autocomplete="off"
@@ -24,7 +24,7 @@
         </label>
       </div>
     </template>
-  </date-picker>
+  </DatePicker>
 </template>
 
 <script>

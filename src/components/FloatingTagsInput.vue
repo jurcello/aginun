@@ -1,6 +1,6 @@
 <template>
   <div class="floating-tags-input position-relative">
-    <vue-tags-input
+    <VueTagsInput
       v-model="tag"
       :placeholder="placeholder"
       :tags="selectedTags"

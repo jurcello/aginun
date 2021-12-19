@@ -1,19 +1,19 @@
 <template>
   <div>
-    <icon-link
+    <IconLink
       :href="`mailto:${role.email}`"
       :link-text="role.email"
       :label="$t('Email')"
       icon="envelope"
     />
-    <icon-link
+    <IconLink
       class="mt-3 mt-md-2"
       :href="`https://organise.earth/xr-netherlands/messages/${role.mattermostId}`"
       :link-text="role.mattermostId"
       :label="$t('Mattermost')"
       icon="chat-left"
     />
-    <icon-link
+    <IconLink
       v-if="role.phone"
       class="mt-3 mt-md-2"
       :href="`tel:${role.phone}`"

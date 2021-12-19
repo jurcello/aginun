@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav-bar />
-    <feedback-alert />
+    <NavBar />
+    <FeedbackAlert />
     <main>
       <router-view />
     </main>

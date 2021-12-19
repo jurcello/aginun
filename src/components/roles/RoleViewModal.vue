@@ -9,7 +9,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div v-if="$apollo.loading" class="modal-body text-center">
-          <pulse-loader />
+          <PulseLoader />
         </div>
         <div v-else-if="!role" class="modal-body text-center">
           <h3 class="mb-0">
@@ -83,13 +83,13 @@
                   </button>
                 </div>
                 <div>
-                  <delete-role-button @delete="onDeleteRole" />
+                  <DeleteRoleButton @delete="onDeleteRole" />
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-body px-md-4 pb-md-4">
-            <role-form
+            <RoleForm
               v-if="showRoleForm"
               :edit-role="role"
               @close="showRoleForm = false"
@@ -128,7 +128,7 @@
               <div class="row justify-content-between">
                 <div class="col-6 col-md-8">
                   <h4>{{ $t("Contacts") }}</h4>
-                  <contact-links :role="role" />
+                  <ContactLinks :role="role" />
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
                   <img
@@ -167,7 +167,7 @@
                   )
                 }}
               </p>
-              <contact-links :role="role" />
+              <ContactLinks :role="role" />
             </template>
           </div>
         </div>

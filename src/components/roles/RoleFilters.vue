@@ -15,7 +15,7 @@
     </div>
     <h5>{{ $t("Filter groups") }}</h5>
     <div class="mb-3">
-      <floating-tags-input
+      <FloatingTagsInput
         v-if="localGroups.length"
         :items="localGroups"
         :selected-items-ids="selectedFilters.localGroups"
@@ -23,7 +23,7 @@
         :placeholder="$t('Add group')"
         @change="updateFilter('localGroups', $event)"
       />
-      <pulse-loader
+      <PulseLoader
         v-else
         class="d-flex justify-content-center my-4"
         color="#3860aa"
@@ -31,7 +31,7 @@
       />
     </div>
     <div class="mb-3">
-      <floating-tags-input
+      <FloatingTagsInput
         v-if="workingCircleItems.length"
         :items="workingCircleItems"
         :selected-items-ids="selectedFilters.workingCircles"
@@ -39,7 +39,7 @@
         :placeholder="$t('Add circle')"
         @change="updateFilter('workingCircles', $event)"
       />
-      <pulse-loader
+      <PulseLoader
         v-else
         class="d-flex justify-content-center my-4"
         color="#3860aa"
@@ -50,7 +50,7 @@
       <h5 class="mb-0">{{ $t("Time Commitment") }}</h5>
       <span class="text-muted">({{ $t("hours/week") }})</span>
     </div>
-    <slider
+    <Slider
       class="mx-2 px-1"
       :classes="{ tooltip: 'slider-tooltip h6 mb-0' }"
       :value="selectedFilters.timeCommitment"

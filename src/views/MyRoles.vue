@@ -21,7 +21,7 @@
           >
             <router-link :to="`my-roles/view/${role.id}`">
               <div class="d-inline-block w-100">
-                <role-card :role="role" />
+                <RoleCard :role="role" />
               </div>
             </router-link>
           </div>
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div v-if="!myRoles.length && isLoadingRoles" class="text-center">
-      <spinner-loader :text="$t('Loading roles')" />
+      <SpinnerLoader :text="$t('Loading roles')" />
     </div>
     <div v-if="!myRoles.length && !isLoadingRoles" class="text-center">
       <img src="@/assets/images/two-birds.svg" class="w-25 mb-3" />
@@ -55,7 +55,7 @@
             <h2 class="modal-title">{{ $t("New role") }}</h2>
           </div>
           <div class="modal-body">
-            <role-form @close="newRoleModal.hide()" />
+            <RoleForm @close="newRoleModal.hide()" />
           </div>
         </div>
       </div>

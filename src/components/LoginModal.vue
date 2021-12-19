@@ -23,9 +23,9 @@
               >{{ $t("Contact us") }}</a
             >
           </p>
-          <validation-observer v-slot="{ invalid }" ref="login_form">
+          <ValidationObserver v-slot="{ invalid }" ref="login_form">
             <form @submit.prevent="handleSubmit">
-              <validation-provider
+              <ValidationProvider
                 v-slot="{ errors }"
                 name="username"
                 rules="required"
@@ -47,8 +47,8 @@
                     {{ errors[0] }}
                   </div>
                 </div>
-              </validation-provider>
-              <validation-provider
+              </ValidationProvider>
+              <ValidationProvider
                 v-slot="{ errors }"
                 name="password"
                 rules="required"
@@ -70,7 +70,7 @@
                     {{ errors[0] }}
                   </div>
                 </div>
-              </validation-provider>
+              </ValidationProvider>
               <div class="d-flex justify-content-end">
                 <button
                   class="btn btn-outline-secondary w-25"
@@ -85,7 +85,7 @@
                   type="submit"
                   :disabled="invalid || serverLoading"
                 >
-                  <pulse-loader
+                  <PulseLoader
                     v-if="serverLoading"
                     color="white"
                     class="d-flex justify-content-center"
@@ -95,7 +95,7 @@
                 </button>
               </div>
             </form>
-          </validation-observer>
+          </ValidationObserver>
         </div>
       </div>
     </div>

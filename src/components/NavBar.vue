@@ -47,10 +47,10 @@
         >
           {{ $t("Logout") }}
         </button>
-        <language-select class="mt-3 mt-md-0 mx-auto ms-md-2 me-md-0" />
+        <LanguageSelect class="mt-3 mt-md-0 mx-auto ms-md-2 me-md-0" />
       </div>
     </nav>
-    <login-modal v-if="loginModalOpen" @closed="loginModalOpen = false" />
+    <LoginModal v-if="loginModalOpen" @closed="loginModalOpen = false" />
   </div>
 </template>
 

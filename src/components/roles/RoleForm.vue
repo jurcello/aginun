@@ -1,5 +1,5 @@
 <template>
-  <validation-observer ref="form" v-slot="{ handleSubmit, invalid }">
+  <ValidationObserver ref="form" v-slot="{ handleSubmit, invalid }">
     <p class="mb-2">
       {{ $t("Choose the languages for this role:") }}
     </p>
@@ -34,7 +34,7 @@
       </label>
     </div>
     <form @submit.prevent="handleSubmit(onSubmit)" @keyup.enter.prevent>
-      <multi-language-input
+      <MultiLanguageInput
         class="mb-4"
         rules="required|alpha_spaces|max:30"
         input-id="title"
@@ -43,7 +43,7 @@
         :value="role.title"
         @input="role.title = $event"
       />
-      <multi-language-input
+      <MultiLanguageInput
         class="mb-4"
         rules="required|max:1000"
         input-id="responsibilities"
@@ -53,7 +53,7 @@
         :value="role.responsibilities"
         @input="role.responsibilities = $event"
       />
-      <multi-language-input
+      <MultiLanguageInput
         class="mb-4"
         rules="max:1000"
         input-id="description"
@@ -63,7 +63,7 @@
         :value="role.description"
         @input="role.description = $event"
       />
-      <multi-language-input
+      <MultiLanguageInput
         class="mb-4"
         rules="max:1000"
         input-id="requirements"
@@ -76,7 +76,7 @@
       <h5 class="mb-3">{{ $t("Role info") }}</h5>
       <div class="row g-3 mb-4">
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             v-slot="{ errors }"
             rules="required"
             tag="div"
@@ -104,10 +104,10 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             v-slot="{ errors }"
             rules="required"
             tag="div"
@@ -137,10 +137,10 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             v-slot="{ errors }"
             rules="required"
             tag="div"
@@ -172,10 +172,10 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
         <div class="col-12 col-lg-6">
-          <date-picker-field
+          <DatePickerField
             :label="$t('Application deadline (optional)')"
             :date="role.dueDate"
             @input="role.dueDate = $event"
@@ -185,7 +185,7 @@
       <h5 class="mb-3">{{ $t("Contact details") }}</h5>
       <div class="row g-3 mb-4">
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             tag="div"
             class="form-floating"
             name="email-address"
@@ -206,10 +206,10 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             tag="div"
             class="form-floating"
             mode="lazy"
@@ -230,10 +230,10 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
         <div class="col-12 col-lg-6">
-          <validation-provider
+          <ValidationProvider
             tag="div"
             class="form-floating"
             name="phone-number"
@@ -255,7 +255,7 @@
             <div class="invalid-feedback" :class="{ 'd-block': errors.length }">
               {{ errors[0] }}
             </div>
-          </validation-provider>
+          </ValidationProvider>
         </div>
       </div>
       <div class="d-flex justify-content-end">
@@ -283,7 +283,7 @@
         </div>
       </div>
     </form>
-  </validation-observer>
+  </ValidationObserver>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
             path="If you have any questions or need support, send a message to {mattermostContact} on Mattermost."
             tag="p"
           >
-            <template v-slot:mattermostContact>
+            <template #mattermostContact>
               <a :href="mattermostContact" target="_blank"
                 >Volunteer Platform</a
               >
@@ -27,7 +27,7 @@
             class="mb-4 mb-md-5"
             tag="p"
           >
-            <template v-slot:contactEmail>
+            <template #contactEmail>
               <a
                 :href="`mailto:${contactEmail}`"
                 target="_blank"
@@ -45,7 +45,7 @@
         <i18n
           path="Want to contribute to our tech project? Check out our {githubPage}."
         >
-          <template v-slot:githubPage>
+          <template #githubPage>
             <a
               class="text-white d-none d-md-inline"
               href="https://github.com/xrnl/aginun"
