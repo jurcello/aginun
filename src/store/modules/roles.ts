@@ -123,7 +123,7 @@ export default {
           throw new Error();
         }
 
-        dispatch("loadRoles");
+        dispatch("reloadRoles");
         dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role created"), {
           root: true,
@@ -151,7 +151,7 @@ export default {
           throw new Error();
         }
 
-        dispatch("loadRoles");
+        dispatch("reloadRoles");
         dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
           root: true,
@@ -176,7 +176,7 @@ export default {
           mutation: FillRoleMutation,
           variables: { id: roleID, filledDate: now },
         });
-        dispatch("loadRoles");
+        dispatch("reloadRoles");
         dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role filled"), {
           root: true,
@@ -204,7 +204,7 @@ export default {
           throw new Error();
         }
 
-        dispatch("loadRoles");
+        dispatch("reloadRoles");
         dispatch("loadMyRoles");
         dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
           root: true,
