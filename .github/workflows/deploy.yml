@@ -1,0 +1,28 @@
+name: Deployment
+on:
+  workflow_dispatch:
+
+env:
+  POSTGRES_PWD: ${{ secrets.POSTGRES_PWD }}
+  HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
+  PUBLIC_HOST: ${{ secrets.PUBLIC_HOST }}
+  FRONTEND_VIRTUAL_HOST: ${{ secrets.FRONTEND_VIRTUAL_HOST }}
+  FRONTEND_LETSENCRYPT_HOST: ${{ secrets.FRONTEND_LETSENCRYPT_HOST }}
+  FRONTEND_LETSENCRYPT_EMAIL: ${{ secrets.FRONTEND_LETSENCRYPT_EMAIL }}
+
+jobs:
+  deployment_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wshihadeh/docker-deployment-action@v2
+        with:
+          remote_docker_host: ${{ secrets.HOST }}
+          ssh_private_key: ${{ secrets.PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.PUBLIC_KEY }}
+          deployment_mode: docker-compose
+          copy_stack_file: false
+          deploy_path: /root/deployment-test
+          stack_file_name: ./docker/docker-compose.yml
+          pull_images_first: true
+          keep_files: 3
+          args: --file ./docker/docker-compose.prod-override.yml up -d --build
